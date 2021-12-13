@@ -19,7 +19,6 @@ public class Team {
     @JoinTable(name = "team_todolist")
     private List<TodoList> todolists = new ArrayList<>();
 
-    /* Constructor */
     public Team() {
         super();
     }
