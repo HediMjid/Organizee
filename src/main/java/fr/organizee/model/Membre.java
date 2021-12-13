@@ -16,9 +16,9 @@ public class Membre {
     private String password;
     private String isAdmin;
     private String couleur;
-    @ManyToOne(fetch= FetchType.EAGER)
+/*    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="TEAM_ID")
-    private Team team;
+    private Team team;*/
 //    @ManyToOne
 //    private Smiley smiley;
 
@@ -33,7 +33,7 @@ public class Membre {
         this.password = password;
         this.isAdmin = isAdmin;
         this.couleur = couleur;
-        this.team = team;
+/*        this.team = team;*/
     }
 
     public int getId() {
@@ -78,12 +78,12 @@ public class Membre {
     public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
     }
-    public Team getTeam() {
+ /*   public Team getTeam() {
         return team;
     }
     public void setTeam(Team team) {
         this.team = team;
-    }
+    }*/
 
     public String getCouleur() {
         return couleur;
@@ -104,7 +104,7 @@ public class Membre {
                 ", password='" + password + '\'' +
                 ", isAdmin='" + isAdmin + '\'' +
                 ", couleur='" + couleur + '\'' +
-                ", team=" + team +
+                /*", team=" + team +*/
                 '}';
     }
 }
