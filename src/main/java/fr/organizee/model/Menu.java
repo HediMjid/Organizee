@@ -10,7 +10,10 @@ public class Menu {
     private int id;
     private String libelle;
     private LocalDate dateMenu;
-
+    @ManyToOne
+    private Team team;
+    @ManyToOne
+    private Membre membre;
 
     public Menu() {
     }

@@ -16,16 +16,15 @@ public class Membre {
     private String password;
     private String isAdmin;
     private String couleur;
-/*    @ManyToOne(fetch= FetchType.EAGER)
+    private String smiley;
+    @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    private Team team;*/
-//    @ManyToOne
-//    private Smiley smiley;
+    private Team team;
 
     public Membre() {
     }
 
-    public Membre(String nom, String prenom, LocalDate dateNaissance, String email, String password, String isAdmin, String couleur, Team team) {
+    public Membre(String nom, String prenom, LocalDate dateNaissance, String email, String password, String isAdmin, String couleur, String smiley, Team team) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -33,6 +32,7 @@ public class Membre {
         this.password = password;
         this.isAdmin = isAdmin;
         this.couleur = couleur;
+        this.smiley = smiley;
 /*        this.team = team;*/
     }
 
@@ -78,12 +78,13 @@ public class Membre {
     public void setIsAdmin(String isAdmin) {
         this.isAdmin = isAdmin;
     }
- /*   public Team getTeam() {
+
+    public Team getTeam() {
         return team;
     }
     public void setTeam(Team team) {
         this.team = team;
-    }*/
+    }
 
     public String getCouleur() {
         return couleur;
@@ -91,6 +92,14 @@ public class Membre {
 
     public void setCouleur(String couleur) {
         this.couleur = couleur;
+    }
+
+    public String getSmiley() {
+        return smiley;
+    }
+
+    public void setSmiley(String smiley) {
+        this.smiley = smiley;
     }
 
     @Override
@@ -104,6 +113,7 @@ public class Membre {
                 ", password='" + password + '\'' +
                 ", isAdmin='" + isAdmin + '\'' +
                 ", couleur='" + couleur + '\'' +
+                ", smiley='" + smiley + '\'' +
                 /*", team=" + team +*/
                 '}';
     }

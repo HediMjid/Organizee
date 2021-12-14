@@ -10,7 +10,8 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
-    @OneToMany
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToMany
     private List<Membre> membres = new ArrayList<>();
     @OneToMany
     @JoinTable(name = "repertoire")
@@ -18,6 +19,9 @@ public class Team {
     @OneToMany
     @JoinTable(name = "team_todolist")
     private List<TodoList> todolists = new ArrayList<>();
+    @OneToMany
+    @JoinTable(name="team_menu")
+    private List<Menu> menus = new ArrayList<>();
 
     public Team() {
         super();
