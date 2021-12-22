@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class MembreController {
     @Autowired
     private TeamRepository teamRepo;
 
-    @GetMapping("/")
+    @RequestMapping("/")
     @ResponseBody
     public String home()
     {
@@ -72,11 +73,36 @@ public class MembreController {
         return ResponseEntity.status(HttpStatus.OK).body(membre);
     }
 
-    @GetMapping(value = "/membres/delete/{id}")
-    public void deleteMembreId(@PathVariable("id") Integer id) {
+//    @GetMapping(value = "/membres/delete/{id}")
+//    public void deleteMembreId(@PathVariable("id") Integer id) {
+//
+//            membreRepo.deleteById(id);
+//
+//    }
 
-            membreRepo.deleteById(id);
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> deleteMembre(@PathVariable int id){
+        try {
+            membreRepo.delete(membreRepo.getById(id));
+            //membreRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Membre effacée !");
 
+        } catch (EntityNotFoundException e) {
+
+            return ResponseEntity.status(HttpStatus.OK).body("Membre introuvable !");
+        }
+    }
+
+    @PostMapping(value="/add", produces="application/json", consumes="application/json")
+    public ResponseEntity<?> addMembre(@RequestBody Membre membre){
+        Membre resultMembre = null;
+        try {
+            resultMembre = membreRepo.saveAndFlush(membre);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resultMembre);
     }
 
     @GetMapping(value = "/team/{id}")
