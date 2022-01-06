@@ -1,5 +1,8 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -17,9 +20,14 @@ public class Membre {
     private String isAdmin;
     private String couleur;
     private String smiley;
-    @ManyToOne
+//    @ManyToOne
+//    @JoinColumn(name="TEAM_ID")
+//    @JsonIgnore
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
-    private Team team;
+    @JsonIgnoreProperties("membre")
+     private Team team;
 
     public Membre() {
     }
@@ -33,7 +41,7 @@ public class Membre {
         this.isAdmin = isAdmin;
         this.couleur = couleur;
         this.smiley = smiley;
-/*        this.team = team;*/
+        this.team = team;
     }
 
     public int getId() {
