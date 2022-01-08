@@ -30,6 +30,7 @@ public class TeamController {
         return  sb.toString();
     }
 
+    // Récupération de toutes les teams
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllTeam(){
         List<Team> liste = null;
