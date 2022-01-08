@@ -1,5 +1,7 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +12,12 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@OneToMany
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @JsonIgnoreProperties("team")
     private List<Membre> membres = new ArrayList<>();
-    @OneToMany
-    @JoinTable(name = "repertoire")
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @JsonIgnoreProperties("team")
+    //@JoinTable(name = "repertoire")
     private List<Contact> contacts = new ArrayList<>();
     @OneToMany
     @JoinTable(name = "team_todolist")
