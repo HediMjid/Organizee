@@ -1,5 +1,7 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -14,20 +16,22 @@ public class Contact {
     private String email;
     private String adresse;
     private LocalDate dateNaissance;
-/*    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
-    private Team team;*/
+    @JsonIgnoreProperties("contact")
+    private Team team;
 
     public Contact() {
     }
 
-    public Contact(String nom, String prenom, String telephone, String email, String adresse, LocalDate dateNaissance) {
+    public Contact(String nom, String prenom, String telephone, String email, String adresse, LocalDate dateNaissance, Team team) {
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
         this.email = email;
         this.adresse = adresse;
         this.dateNaissance = dateNaissance;
+        this.team = team;
     }
 
     public int getId() {
@@ -84,6 +88,13 @@ public class Contact {
 
     public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     @Override
