@@ -1,5 +1,7 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -10,7 +12,9 @@ public class Menu {
     private int id;
     private String libelle;
     private LocalDate dateMenu;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="TEAM_ID")
+    @JsonIgnoreProperties("menu")
     private Team team;
     @ManyToOne
     private Membre membre;

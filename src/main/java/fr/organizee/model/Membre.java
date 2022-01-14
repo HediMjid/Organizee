@@ -23,11 +23,10 @@ public class Membre {
 //    @ManyToOne
 //    @JoinColumn(name="TEAM_ID")
 //    @JsonIgnore
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties("membre")
-     private Team team;
+    private Team team;
 
     public Membre() {
     }

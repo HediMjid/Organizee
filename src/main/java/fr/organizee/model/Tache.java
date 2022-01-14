@@ -1,5 +1,7 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,12 +10,13 @@ public class Tache {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String texte;
-    private boolean etat;
-    @ManyToOne
-    @JoinColumn(name = "todolist_id")
+    private Boolean etat;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="TODOLIST_ID")
+    @JsonIgnoreProperties("tache")
     private TodoList todolist;
 
-    public Tache(String texte, boolean etat) {
+    public Tache(String texte, Boolean etat) {
         this.texte = texte;
         this.etat = etat;
     }
@@ -37,12 +40,20 @@ public class Tache {
         this.texte = texte;
     }
 
-    public boolean isEtat() {
+    public Boolean getEtat() {
         return etat;
     }
 
-    public void setEtat(boolean etat) {
+    public void setEtat(Boolean etat) {
         this.etat = etat;
+    }
+
+    public TodoList getTodolist() {
+        return todolist;
+    }
+
+    public void setTodolist(TodoList todolist) {
+        this.todolist = todolist;
     }
 
     @Override

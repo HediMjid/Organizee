@@ -17,13 +17,12 @@ public class Team {
     private List<Membre> membres = new ArrayList<>();
     @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
     @JsonIgnoreProperties("team")
-    //@JoinTable(name = "repertoire")
     private List<Contact> contacts = new ArrayList<>();
-    @OneToMany
-    @JoinTable(name = "team_todolist")
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @JsonIgnoreProperties("team")
     private List<TodoList> todolists = new ArrayList<>();
-    @OneToMany
-    @JoinTable(name="team_menu")
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @JsonIgnoreProperties("team")
     private List<Menu> menus = new ArrayList<>();
 
     public Team() {
