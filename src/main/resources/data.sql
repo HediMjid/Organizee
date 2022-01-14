@@ -20,22 +20,25 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `nom` varchar(255) DEFAULT NULL,
   `prenom` varchar(255) DEFAULT NULL,
   `telephone` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `team_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7gyd9s84tx9eeuigeu3uv984x` (`team_id`),
+  CONSTRAINT `FK7gyd9s84tx9eeuigeu3uv984x` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- Export de données de la table jpa.contact : ~0 rows (environ)
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` (`id`, `adresse`, `date_naissance`, `email`, `nom`, `prenom`, `telephone`) VALUES
-	(1, '7554 Messerschmidt Center', '2021-01-24', 'oogleasane0@cargocollective.com', 'Ophelia', 'O\'Gleasane', '913-198-6499'),
-	(2, '534 Jay Way', '2021-03-26', 'fmowett1@ocn.ne.jp', 'Fiann', 'Mowett', '248-224-7233'),
-	(3, '077 Buell Place', '2021-06-24', 'vlewknor2@spotify.com', 'Vladamir', 'Lewknor', '922-822-3626'),
-	(4, '6226 Esker Street', '2021-04-13', 'jbarmadier3@opensource.org', 'Jervis', 'Barmadier', '838-581-8112'),
-	(5, '28531 Luster Circle', '2021-06-15', 'tmee4@ameblo.jp', 'Tuesday', 'Mee', '761-975-7324'),
-	(6, '96 Hallows Avenue', '2021-08-13', 'tcolvine5@elegantthemes.com', 'Toni', 'Colvine', '348-778-7679'),
-	(7, '6401 Jay Crossing', '2021-01-14', 'rrielly6@netlog.com', 'Riane', 'Rielly', '740-571-0835'),
-	(8, '3273 Cascade Pass', '2021-03-22', 'jlauder7@rambler.ru', 'Juieta', 'Lauder', '928-408-6855'),
-	(9, '1170 Burning Wood Road', '2021-05-31', 'tbolver8@google.ca', 'Thibaut', 'Bolver', '681-860-8291'),
-	(10, '1 Westridge Road', '2021-03-11', 'emebs9@uol.com.br', 'Evered', 'Mebs', '898-483-6075');
+INSERT INTO `contact` (`id`, `adresse`, `date_naissance`, `email`, `nom`, `prenom`, `telephone`, `team_id`) VALUES
+	(1, '7554 Messerschmidt Center', '2021-01-24', 'oogleasane0@cargocollective.com', 'Ophelia', 'O\'Gleasane', '913-198-6499', 1),
+	(2, '534 Jay Way', '2021-03-26', 'fmowett1@ocn.ne.jp', 'Fiann', 'Mowett', '248-224-7233', 1),
+	(3, '077 Buell Place', '2021-06-24', 'vlewknor2@spotify.com', 'Vladamir', 'Lewknor', '922-822-3626', 1),
+	(4, '6226 Esker Street', '2021-04-13', 'jbarmadier3@opensource.org', 'Jervis', 'Barmadier', '838-581-8112', 2),
+	(5, '28531 Luster Circle', '2021-06-15', 'tmee4@ameblo.jp', 'Tuesday', 'Mee', '761-975-7324', 2),
+	(6, '96 Hallows Avenue', '2021-08-13', 'tcolvine5@elegantthemes.com', 'Toni', 'Colvine', '348-778-7679', 2),
+	(7, '6401 Jay Crossing', '2021-01-14', 'rrielly6@netlog.com', 'Riane', 'Rielly', '740-571-0835', 3),
+	(8, '3273 Cascade Pass', '2021-03-22', 'jlauder7@rambler.ru', 'Juieta', 'Lauder', '928-408-6855', 3),
+	(9, '1170 Burning Wood Road', '2021-05-31', 'tbolver8@google.ca', 'Thibaut', 'Bolver', '681-860-8291', 4),
+	(10, '1 Westridge Road', '2021-03-11', 'emebs9@uol.com.br', 'Evered', 'Mebs', '898-483-6075', 4);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 
 -- Export de la structure de la table jpa. membre
@@ -53,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `membre` (
   PRIMARY KEY (`id`),
   KEY `FKll5mmgkw1h2kmxnuo4885x2fn` (`team_id`),
   CONSTRAINT `FKll5mmgkw1h2kmxnuo4885x2fn` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- Export de données de la table jpa.membre : ~0 rows (environ)
 /*!40000 ALTER TABLE `membre` DISABLE KEYS */;
@@ -61,7 +64,9 @@ INSERT INTO `membre` (`id`, `couleur`, `date_naissance`, `email`, `is_admin`, `n
 	(1, '#fcba03', '2021-12-13', 'hedi@simplon.com', '0', 'SKYWALKER', 'toto', 'Hédi', NULL, 1),
 	(2, '#8df505', '2021-07-03', 'aline@simplon.com', '0', 'FETT', 'tata', 'Aline', NULL, 1),
 	(3, '#091ced', '2021-01-20', 'isabelle@simplon.com', '0', 'SOLO', 'titi', 'Isabelle', NULL, 2),
-	(4, '#ed09de', '2021-06-29', 'blandine@simplon.com', '0', 'VADER', 'tutu', 'Blandine', NULL, 3);
+	(4, '#ed09de', '2021-06-29', 'blandine@simplon.com', '0', 'VADER', 'tutu', 'Blandine', NULL, 3),
+	(5, '#ed09de', '2021-08-29', 'sana@simplon.com', '0', 'C3PO', 'riri', 'Sana', NULL, 4),
+	(6, '#ed09de', '2021-10-29', 'cecile@simplon.com', '0', 'R2D2', 'loulou', 'Cecile', NULL, 4);
 /*!40000 ALTER TABLE `membre` ENABLE KEYS */;
 
 -- Export de la structure de la table jpa. menu
@@ -82,35 +87,10 @@ CREATE TABLE IF NOT EXISTS `menu` (
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. repertoire
-CREATE TABLE IF NOT EXISTS `repertoire` (
-  `team_id` int(11) NOT NULL,
-  `contacts_id` int(11) NOT NULL,
-  UNIQUE KEY `UK_g91q6p6ssjxdhcallbd9yfary` (`contacts_id`),
-  KEY `FK7u57nrpbtl5yhuh3nyx0ccy88` (`team_id`),
-  CONSTRAINT `FK7u57nrpbtl5yhuh3nyx0ccy88` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`),
-  CONSTRAINT `FKe3fy0q6urmw03kn29mj7h7vf5` FOREIGN KEY (`contacts_id`) REFERENCES `contact` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Export de données de la table jpa.repertoire : ~0 rows (environ)
-/*!40000 ALTER TABLE `repertoire` DISABLE KEYS */;
-INSERT INTO `repertoire` (`team_id`, `contacts_id`) VALUES
-	(1, 1),
-	(1, 2),
-	(1, 3),
-	(1, 4),
-	(2, 5),
-	(2, 6),
-	(2, 7),
-	(2, 8),
-	(3, 9),
-	(3, 10);
-/*!40000 ALTER TABLE `repertoire` ENABLE KEYS */;
-
 -- Export de la structure de la table jpa. tache
 CREATE TABLE IF NOT EXISTS `tache` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `etat` bit(1) NOT NULL,
+  `etat` bit(1) DEFAULT NULL,
   `texte` varchar(255) DEFAULT NULL,
   `todolist_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -144,51 +124,22 @@ INSERT INTO `team` (`id`, `nom`) VALUES
 	(4, 'Team Bancal');
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. team_menu
-CREATE TABLE IF NOT EXISTS `team_menu` (
-  `team_id` int(11) NOT NULL,
-  `menus_id` int(11) NOT NULL,
-  UNIQUE KEY `UK_bct73pef90yxrapd4pu8sahk8` (`menus_id`),
-  KEY `FKcovbsbmma6ibkomtg6y15oy4a` (`team_id`),
-  CONSTRAINT `FK8hdjys2iu86t1tm4iq492h3ti` FOREIGN KEY (`menus_id`) REFERENCES `menu` (`id`),
-  CONSTRAINT `FKcovbsbmma6ibkomtg6y15oy4a` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Export de données de la table jpa.team_menu : ~0 rows (environ)
-/*!40000 ALTER TABLE `team_menu` DISABLE KEYS */;
-/*!40000 ALTER TABLE `team_menu` ENABLE KEYS */;
-
--- Export de la structure de la table jpa. team_todolist
-CREATE TABLE IF NOT EXISTS `team_todolist` (
-  `team_id` int(11) NOT NULL,
-  `todolists_id` int(11) NOT NULL,
-  UNIQUE KEY `UK_fjwjvprqqeeugglduq8rdhsyw` (`todolists_id`),
-  KEY `FK7jh4kgpji05rll7nagp4dsago` (`team_id`),
-  CONSTRAINT `FK4ntj6ub8hheh7f4w79qy3ql40` FOREIGN KEY (`todolists_id`) REFERENCES `todo_list` (`id`),
-  CONSTRAINT `FK7jh4kgpji05rll7nagp4dsago` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Export de données de la table jpa.team_todolist : ~0 rows (environ)
-/*!40000 ALTER TABLE `team_todolist` DISABLE KEYS */;
-INSERT INTO `team_todolist` (`team_id`, `todolists_id`) VALUES
-	(2, 2),
-	(2, 3),
-	(3, 1);
-/*!40000 ALTER TABLE `team_todolist` ENABLE KEYS */;
-
 -- Export de la structure de la table jpa. todo_list
 CREATE TABLE IF NOT EXISTS `todo_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `team_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK6ty40hkdysbql7xaewhujsjg` (`team_id`),
+  CONSTRAINT `FK6ty40hkdysbql7xaewhujsjg` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- Export de données de la table jpa.todo_list : ~0 rows (environ)
 /*!40000 ALTER TABLE `todo_list` DISABLE KEYS */;
-INSERT INTO `todo_list` (`id`, `nom`) VALUES
-	(1, 'Pour Blandine'),
-	(2, 'Corvées'),
-	(3, 'Noel');
+INSERT INTO `todo_list` (`id`, `nom`, `team_id`) VALUES
+	(1, 'Pour Blandine', 1),
+	(2, 'Corvées', 1),
+	(3, 'Noel', 1);
 /*!40000 ALTER TABLE `todo_list` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
