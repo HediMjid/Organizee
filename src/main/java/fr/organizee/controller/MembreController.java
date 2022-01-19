@@ -148,22 +148,4 @@ public class MembreController {
 //
 //        return ResponseEntity.status(HttpStatus.OK).body(liste);
 //    }
-
-    @PostMapping(value="/login", produces="application/json", consumes="application/json")
-    public ResponseEntity<?> login(@RequestBody Membre membre){
-        Membre resultMembre = null;
-        try {
-            resultMembre = membreRepo.findByNom(membre.getNom());
-            if(resultMembre == null){
-                throw new RuntimeException("User inexistant.");
-            }
-            if(!resultMembre.getPassword().equals(membre.getPassword())){
-                throw new RuntimeException("mauvais password.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(resultMembre);
-    }
 }
