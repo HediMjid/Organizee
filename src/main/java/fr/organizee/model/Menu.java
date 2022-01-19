@@ -12,6 +12,7 @@ public class Menu {
     private int id;
     private String libelle;
     private LocalDate dateMenu;
+    private int validationProposition;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties("menu")
@@ -22,9 +23,10 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(String libelle, LocalDate dateMenu) {
+    public Menu(String libelle, LocalDate dateMenu, int validationProposition) {
         this.libelle = libelle;
         this.dateMenu = dateMenu;
+        this.validationProposition=validationProposition;
     }
 
     public int getId() {
