@@ -6,6 +6,7 @@ import fr.organizee.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -33,6 +34,7 @@ public class TeamController {
 
     // Récupération de toutes les teams
     @GetMapping(value = "/all")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> getAllTeam(){
         List<Team> liste = null;
         try
@@ -46,6 +48,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findTeamById(@PathVariable int id){
         Optional<Team> liste = null;
         try
@@ -59,6 +62,7 @@ public class TeamController {
     }
 
     @PostMapping(value="/add", produces="application/json", consumes="application/json")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> addTeam(@RequestBody Team team){
         Team resultTeam = null;
         try {
@@ -71,6 +75,7 @@ public class TeamController {
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> updateTeam(@RequestBody Team team, @PathVariable Integer id) throws Exception {
         Team resultTeam = null;
         try {
@@ -84,6 +89,7 @@ public class TeamController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteTeam(@PathVariable int id){
         try {
             teamRepo.delete(teamRepo.getById(id));
