@@ -1,5 +1,6 @@
 package fr.organizee.controller;
 
+import fr.organizee.model.Membre;
 import fr.organizee.model.Team;
 import fr.organizee.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,41 @@ public class TeamController {
         return ResponseEntity.status(HttpStatus.OK).body(liste);
     }
 
+    @PostMapping(value="/add", produces="application/json", consumes="application/json")
+    public ResponseEntity<?> addTeam(@RequestBody Team team){
+        Team resultTeam = null;
+        try {
+            resultTeam = teamRepo.saveAndFlush(team);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resultTeam);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateTeam(@RequestBody Team team, @PathVariable Integer id) throws Exception {
+        Team resultTeam = null;
+        try {
+            resultTeam = teamRepo.save(team);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultTeam);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> deleteTeam(@PathVariable int id){
+        try {
+            teamRepo.delete(teamRepo.getById(id));
+            //membreRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Team effacée !");
+
+        } catch (EntityNotFoundException e) {
+
+            return ResponseEntity.status(HttpStatus.OK).body("Team introuvable !");
+        }
+    }
 }
