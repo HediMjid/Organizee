@@ -29,6 +29,7 @@ public interface MembreService {
      */
     String signup(Membre membre) throws ExistingUsernameException;
 
+
     /**
      * Methode qui retourne tous les utilisateurs de la bd
      * @return the list of all application users.
@@ -40,6 +41,10 @@ public interface MembreService {
      * @param email the username to look for.
      * @return an Optional object containing user if found, empty otherwise.
      */
-    Optional<Membre> findUserByEmail(String email);
+    Optional<Membre> findUserByEmail(Membre membre);
+    Optional<Membre> findByEmail(String email);
+
+    Membre chercheEmail(String email);
+
 }
 
