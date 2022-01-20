@@ -55,8 +55,16 @@ public class Team {
         this.membres = membre;
     }
 
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public String toString() {
-        return "Team [id=" + id + ", nom=" + nom + ", membre=" + membres + "]";
+        return "Team [id=" + id + ", nom=" + nom + ", membre=" + membres + ", contact=" + contacts + "]";
     }
 }

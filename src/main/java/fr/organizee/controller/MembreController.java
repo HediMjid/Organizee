@@ -1,17 +1,28 @@
 package fr.organizee.controller;
 
+import fr.organizee.dto.JsonWebToken;
+import fr.organizee.dto.MembreDto;
+import fr.organizee.exception.ExistingUsernameException;
+import fr.organizee.exception.InvalidCredentialsException;
 import fr.organizee.model.Membre;
 import fr.organizee.model.Team;
 import fr.organizee.repository.MembreRepository;
+<<<<<<< HEAD
 import fr.organizee.repository.TeamRepository;
+=======
+//import fr.organizee.repository.TeamRepository;
+import fr.organizee.service.MembreService;
+>>>>>>> b147bc406c22caa9c817c7189a325058d8550a69
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /* toto */
 @RestController
@@ -22,7 +33,14 @@ public class MembreController {
     @Autowired
     private MembreRepository membreRepo;
 
+<<<<<<< HEAD
     //    @Autowired
+=======
+    @Autowired
+    private MembreService membreService;
+
+//    @Autowired
+>>>>>>> b147bc406c22caa9c817c7189a325058d8550a69
 //    private TeamRepository teamRepo;
 
 //    @RequestMapping("/membres")
@@ -36,6 +54,7 @@ public class MembreController {
     }
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> getAll(){
         List<Membre> liste = null;
         try
@@ -46,6 +65,13 @@ public class MembreController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(liste);
+    }
+
+    @GetMapping("/admin/all")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
+    public List<MembreDto> getAllAdminUsers() {
+        return membreService.findAllUsers().stream().map(appUser -> new MembreDto(appUser.getEmail(), appUser.getRoleList())).collect(Collectors.toList());
+
     }
 
 //    @GetMapping(value = "/team/all")
@@ -62,6 +88,7 @@ public class MembreController {
 //    }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findById(@PathVariable int id){
         Optional<Membre> membre = null;
         try
@@ -82,11 +109,12 @@ public class MembreController {
 //    }
 
     @DeleteMapping(value = "/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteMembre(@PathVariable int id){
         try {
             membreRepo.delete(membreRepo.getById(id));
             //membreRepo.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Membre effacée !");
+            return ResponseEntity.status(HttpStatus.OK).body("Membre effacé !");
 
         } catch (EntityNotFoundException e) {
 
@@ -94,19 +122,26 @@ public class MembreController {
         }
     }
 
-    @PostMapping(value="/add", produces="application/json", consumes="application/json")
-    public ResponseEntity<?> addMembre(@RequestBody Membre membre){
-        Membre resultMembre = null;
+    @PostMapping("/sign-up")
+    public ResponseEntity<JsonWebToken> signUp(@RequestBody Membre membre) {
         try {
-            resultMembre = membreRepo.saveAndFlush(membre);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.ok(new JsonWebToken(membreService.signup(membre)));
+        } catch (ExistingUsernameException ex) {
+            return ResponseEntity.badRequest().build();
         }
+    }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resultMembre);
+    @PostMapping("/sign-in")
+    public ResponseEntity<JsonWebToken> signIn(@RequestBody Membre membre) {
+        try {
+            return ResponseEntity.ok(new JsonWebToken(membreService.signin(membre.getEmail(), membre.getPassword())));
+        } catch (InvalidCredentialsException ex) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable Integer id) throws Exception {
         Membre resultMembre = null;
         try {
@@ -148,22 +183,4 @@ public class MembreController {
 //
 //        return ResponseEntity.status(HttpStatus.OK).body(liste);
 //    }
-
-    @PostMapping(value="/login", produces="application/json", consumes="application/json")
-    public ResponseEntity<?> login(@RequestBody Membre membre){
-        Membre resultMembre = null;
-        try {
-            resultMembre = membreRepo.findByNom(membre.getNom());
-            if(resultMembre == null){
-                throw new RuntimeException("User inexistant.");
-            }
-            if(!resultMembre.getPassword().equals(membre.getPassword())){
-                throw new RuntimeException("mauvais password.");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(resultMembre);
-    }
 }
