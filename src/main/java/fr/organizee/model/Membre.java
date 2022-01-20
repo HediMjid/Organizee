@@ -2,9 +2,11 @@ package fr.organizee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -15,8 +17,19 @@ public class Membre {
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
+
+    @NotNull
+    @Column(nullable = false)
     private String email;
+
+    @NotNull
+    @Column(nullable = false)
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private List<Role> roleList;
+
     private String isAdmin;
     private String couleur;
     private String smiley;
@@ -31,7 +44,7 @@ public class Membre {
     public Membre() {
     }
 
-    public Membre(String nom, String prenom, LocalDate dateNaissance, String email, String password, String isAdmin, String couleur, String smiley, Team team) {
+    public Membre(String nom, String prenom, LocalDate dateNaissance, @NotNull String email, @NotNull String password, String isAdmin, String couleur, String smiley, Team team, List<Role> roleList) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -41,7 +54,15 @@ public class Membre {
         this.couleur = couleur;
         this.smiley = smiley;
         this.team = team;
+        this.roleList=roleList;
     }
+
+    public Membre(@NotNull String email, @NotNull String password, List<Role> roleList) {
+        this.email = email;
+        this.password = password;
+        this.roleList=roleList;
+    }
+
 
     public int getId() {
         return id;
@@ -107,6 +128,13 @@ public class Membre {
 
     public void setSmiley(String smiley) {
         this.smiley = smiley;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     @Override
