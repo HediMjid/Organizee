@@ -1,9 +1,9 @@
 package fr.organizee.controller;
 
 import fr.organizee.model.Membre;
-//import fr.organizee.model.Team;
+import fr.organizee.model.Team;
 import fr.organizee.repository.MembreRepository;
-//import fr.organizee.repository.TeamRepository;
+import fr.organizee.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class MembreController {
     @Autowired
     private MembreRepository membreRepo;
 
-//    @Autowired
+    //    @Autowired
 //    private TeamRepository teamRepo;
 
 //    @RequestMapping("/membres")

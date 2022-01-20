@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Export de la structure de la table jpa. contact
+-- Export de la structure de la table organizee.contact
 CREATE TABLE IF NOT EXISTS `contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `adresse` varchar(255) DEFAULT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   CONSTRAINT `FK7gyd9s84tx9eeuigeu3uv984x` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- Export de données de la table jpa.contact : ~0 rows (environ)
+-- Export de données de la table organizee.contact : ~0 rows (environ)
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
 INSERT INTO `contact` (`id`, `adresse`, `date_naissance`, `email`, `nom`, `prenom`, `telephone`, `team_id`) VALUES
 	(1, '7554 Messerschmidt Center', '2021-01-24', 'oogleasane0@cargocollective.com', 'Ophelia', 'O\'Gleasane', '913-198-6499', 1),
@@ -41,7 +41,7 @@ INSERT INTO `contact` (`id`, `adresse`, `date_naissance`, `email`, `nom`, `preno
 	(10, '1 Westridge Road', '2021-03-11', 'emebs9@uol.com.br', 'Evered', 'Mebs', '898-483-6075', 4);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. membre
+-- Export de la structure de la table organizee.membre
 CREATE TABLE IF NOT EXISTS `membre` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `couleur` varchar(255) DEFAULT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `membre` (
   CONSTRAINT `FKll5mmgkw1h2kmxnuo4885x2fn` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Export de données de la table jpa.membre : ~0 rows (environ)
+-- Export de données de la table organizee.membre : ~0 rows (environ)
 /*!40000 ALTER TABLE `membre` DISABLE KEYS */;
 INSERT INTO `membre` (`id`, `couleur`, `date_naissance`, `email`, `is_admin`, `nom`, `password`, `prenom`, `smiley`, `team_id`) VALUES
 	(1, '#fcba03', '2021-12-13', 'hedi@simplon.com', '0', 'SKYWALKER', 'toto', 'Hédi', NULL, 1),
@@ -69,7 +69,7 @@ INSERT INTO `membre` (`id`, `couleur`, `date_naissance`, `email`, `is_admin`, `n
 	(6, '#ed09de', '2021-10-29', 'cecile@simplon.com', '0', 'R2D2', 'loulou', 'Cecile', NULL, 4);
 /*!40000 ALTER TABLE `membre` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. menu
+-- Export de la structure de la table organizee.menu
 CREATE TABLE IF NOT EXISTS `menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date_menu` date DEFAULT NULL,
@@ -83,11 +83,11 @@ CREATE TABLE IF NOT EXISTS `menu` (
   CONSTRAINT `FKky2j5l3syborv9dtqtprgpr28` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Export de données de la table jpa.menu : ~0 rows (environ)
+-- Export de données de la table organizee.menu : ~0 rows (environ)
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. tache
+-- Export de la structure de la table organizee.tache
 CREATE TABLE IF NOT EXISTS `tache` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `etat` bit(1) DEFAULT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `tache` (
   CONSTRAINT `FK50q0ja9qvoud7ujsudc9jj9yk` FOREIGN KEY (`todolist_id`) REFERENCES `todo_list` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
--- Export de données de la table jpa.tache : ~0 rows (environ)
+-- Export de données de la table organizee.tache : ~0 rows (environ)
 /*!40000 ALTER TABLE `tache` DISABLE KEYS */;
 INSERT INTO `tache` (`id`, `etat`, `texte`, `todolist_id`) VALUES
 	(1, b'0', 'Apprendre le PHP', 1),
@@ -108,14 +108,14 @@ INSERT INTO `tache` (`id`, `etat`, `texte`, `todolist_id`) VALUES
 	(5, b'0', 'Trouver un repas', 3);
 /*!40000 ALTER TABLE `tache` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. team
+-- Export de la structure de la table organizee.team
 CREATE TABLE IF NOT EXISTS `team` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Export de données de la table jpa.team : ~0 rows (environ)
+-- Export de données de la table organizee.team : ~0 rows (environ)
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
 INSERT INTO `team` (`id`, `nom`) VALUES
 	(1, 'Team JAVA'),
@@ -124,7 +124,7 @@ INSERT INTO `team` (`id`, `nom`) VALUES
 	(4, 'Team Bancal');
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 
--- Export de la structure de la table jpa. todo_list
+-- Export de la structure de la table organizee.todo_list
 CREATE TABLE IF NOT EXISTS `todo_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) DEFAULT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `todo_list` (
   CONSTRAINT `FK6ty40hkdysbql7xaewhujsjg` FOREIGN KEY (`team_id`) REFERENCES `team` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Export de données de la table jpa.todo_list : ~0 rows (environ)
+-- Export de données de la table organizee.todo_list : ~0 rows (environ)
 /*!40000 ALTER TABLE `todo_list` DISABLE KEYS */;
 INSERT INTO `todo_list` (`id`, `nom`, `team_id`) VALUES
 	(1, 'Pour Blandine', 1),
