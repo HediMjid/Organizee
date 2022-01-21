@@ -22,7 +22,7 @@ public class TeamController {
     @Autowired
     private TeamRepository teamRepo;
 
-//    @RequestMapping("/teams")
+    //    @RequestMapping("/teams")
     @ResponseBody
     public String home()
     {

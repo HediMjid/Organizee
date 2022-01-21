@@ -5,14 +5,10 @@ import fr.organizee.dto.MembreDto;
 import fr.organizee.exception.ExistingUsernameException;
 import fr.organizee.exception.InvalidCredentialsException;
 import fr.organizee.model.Membre;
-import fr.organizee.model.Team;
+//import fr.organizee.model.Team;
 import fr.organizee.repository.MembreRepository;
-<<<<<<< HEAD
-import fr.organizee.repository.TeamRepository;
-=======
 //import fr.organizee.repository.TeamRepository;
 import fr.organizee.service.MembreService;
->>>>>>> b147bc406c22caa9c817c7189a325058d8550a69
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +30,6 @@ public class MembreController {
     @Autowired
     private MembreRepository membreRepo;
 
-<<<<<<< HEAD
-    //    @Autowired
-=======
     @Autowired
     private MembreService membreService;
 
@@ -44,10 +37,9 @@ public class MembreController {
     private BCryptPasswordEncoder passwordEncoder;
 
 //    @Autowired
->>>>>>> b147bc406c22caa9c817c7189a325058d8550a69
 //    private TeamRepository teamRepo;
 
-//    @RequestMapping("/membres")
+    //    @RequestMapping("/membres")
     @ResponseBody
     public String home()
     {
