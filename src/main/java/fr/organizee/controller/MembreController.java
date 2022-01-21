@@ -69,19 +69,20 @@ public class MembreController {
         return membreService.findAllUsers().stream().map(appUser -> new MembreDto(appUser.getEmail(), appUser.getRoleList())).collect(Collectors.toList());
 
     }
-
+    //cette methode ne fonctionne pas parce que ça affiche "trouvé" dans tous les cas
     @GetMapping("/forgot-password")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> findUserByEmail(@RequestBody Membre findUserByEmail)
-    {
-        try {
+    public ResponseEntity<?> findUserByEmail(@RequestBody Membre findUserByEmail) {
 
+        try {
             this.membreService.findUserByEmail(findUserByEmail);
-            return ResponseEntity.ok("ok");
-        } catch(Exception e)
-        {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.OK).body("Email trouvé !");
+
+        } catch (EntityNotFoundException e) {
+
+            return ResponseEntity.status(HttpStatus.OK).body("Email introuvable !");
         }
+
     }
 
     @PutMapping("/reset-password/{email}")
@@ -95,7 +96,10 @@ public class MembreController {
 
             resultMembre.setPassword(passwordEncoder.encode(password));
 
+            System.out.println(password);
+
             this.membreRepo.save(resultMembre);
+            System.out.println(resultMembre.getPassword());
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
