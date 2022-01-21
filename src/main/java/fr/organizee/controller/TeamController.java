@@ -1,6 +1,5 @@
 package fr.organizee.controller;
 
-import fr.organizee.model.Membre;
 import fr.organizee.model.Team;
 import fr.organizee.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findTeamById(@PathVariable int id){
         Optional<Team> liste = null;
         try

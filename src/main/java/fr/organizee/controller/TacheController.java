@@ -1,12 +1,11 @@
 package fr.organizee.controller;
 
-import fr.organizee.model.Membre;
 import fr.organizee.model.Tache;
-import fr.organizee.repository.MembreRepository;
 import fr.organizee.repository.TacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +19,7 @@ public class TacheController {
     @Autowired
     private TacheRepository tacheRepo;
 
+    // Récupère toutes les taches de toutes la base toutes team confondu
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAll(){
         List<Tache> liste = null;
@@ -33,6 +33,7 @@ public class TacheController {
         return ResponseEntity.status(HttpStatus.OK).body(liste);
     }
 
+    // Récupère les infos d'une tache avec son ID
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findById(@PathVariable int id){
         Optional<Tache> tache = null;
@@ -46,6 +47,7 @@ public class TacheController {
         return ResponseEntity.status(HttpStatus.OK).body(tache);
     }
 
+    // Efface une tache avec son ID
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> deleteTache(@PathVariable int id){
         try {
@@ -58,6 +60,7 @@ public class TacheController {
         }
     }
 
+    // Ajoute une tache
     @PostMapping(value="/add", produces="application/json", consumes="application/json")
     public ResponseEntity<?> addTache(@RequestBody Tache tache){
         Tache resultTache = null;
@@ -70,6 +73,7 @@ public class TacheController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resultTache);
     }
 
+    //Met a jour les informations d'une date avec son ID
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateTache(@RequestBody Tache tache, @PathVariable Integer id) throws Exception {
         Tache resultTache = null;
@@ -81,5 +85,19 @@ public class TacheController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resultTache);
+    }
+
+    //A revoir, résultat a chier, passez par la todolist
+    @GetMapping(value = "team/{team_id}")
+    public ResponseEntity<?> findByTeamId(@PathVariable int team_id){
+        List<Tache> taches = null;
+        try
+        {
+            taches = tacheRepo.FindTachesByTeam(team_id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(taches);
     }
 }

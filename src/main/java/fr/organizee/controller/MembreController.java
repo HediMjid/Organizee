@@ -5,9 +5,7 @@ import fr.organizee.dto.MembreDto;
 import fr.organizee.exception.ExistingUsernameException;
 import fr.organizee.exception.InvalidCredentialsException;
 import fr.organizee.model.Membre;
-//import fr.organizee.model.Team;
 import fr.organizee.repository.MembreRepository;
-//import fr.organizee.repository.TeamRepository;
 import fr.organizee.service.MembreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,10 +30,6 @@ public class MembreController {
     @Autowired
     private MembreService membreService;
 
-//    @Autowired
-//    private TeamRepository teamRepo;
-
-//    @RequestMapping("/membres")
     @ResponseBody
     public String home()
     {
@@ -45,6 +39,7 @@ public class MembreController {
         return  sb.toString();
     }
 
+    // Récupère tout les membres de la base
     @GetMapping(value = "/all")
     @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> getAll(){
@@ -66,21 +61,9 @@ public class MembreController {
 
     }
 
-//    @GetMapping(value = "/team/all")
-//    public ResponseEntity<?> getAllTeam(){
-//        List<Team> liste = null;
-//        try
-//        {
-//            liste = teamRepo.findAll();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(liste);
-//    }
-
+    //Récupérer les informations d'un membre par son ID
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findById(@PathVariable int id){
         Optional<Membre> membre = null;
         try
@@ -93,13 +76,7 @@ public class MembreController {
         return ResponseEntity.status(HttpStatus.OK).body(membre);
     }
 
-//    @GetMapping(value = "/membres/delete/{id}")
-//    public void deleteMembreId(@PathVariable("id") Integer id) {
-//
-//            membreRepo.deleteById(id);
-//
-//    }
-
+    //Efface un membre par son ID
     @DeleteMapping(value = "/delete/{id}")
     @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteMembre(@PathVariable int id){
@@ -114,6 +91,7 @@ public class MembreController {
         }
     }
 
+    //Ajouter un membre et inscription
     @PostMapping("/sign-up")
     public ResponseEntity<JsonWebToken> signUp(@RequestBody Membre membre) {
         try {
@@ -123,6 +101,7 @@ public class MembreController {
         }
     }
 
+    //Login
     @PostMapping("/sign-in")
     public ResponseEntity<JsonWebToken> signIn(@RequestBody Membre membre) {
         try {
@@ -132,8 +111,9 @@ public class MembreController {
         }
     }
 
+    //Met a jour les informations d'un membre par son ID
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable Integer id) throws Exception {
         Membre resultMembre = null;
         try {
