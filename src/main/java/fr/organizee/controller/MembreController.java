@@ -121,7 +121,7 @@ public class MembreController {
 
     //Efface un membre par son ID
     @DeleteMapping(value = "/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteMembre(@PathVariable int id){
         try {
             membreRepo.delete(membreRepo.getById(id));

@@ -36,7 +36,7 @@ public class Membre {
     //    @ManyToOne
 //    @JoinColumn(name="TEAM_ID")
 //    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties("membre")
     private Team team;
