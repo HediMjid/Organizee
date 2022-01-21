@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -31,6 +32,9 @@ public class MembreController {
 
     @Autowired
     private MembreService membreService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 //    @Autowired
 //    private TeamRepository teamRepo;
@@ -65,6 +69,41 @@ public class MembreController {
         return membreService.findAllUsers().stream().map(appUser -> new MembreDto(appUser.getEmail(), appUser.getRoleList())).collect(Collectors.toList());
 
     }
+
+    @GetMapping("/forgot-password")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> findUserByEmail(@RequestBody Membre findUserByEmail)
+    {
+        try {
+
+            this.membreService.findUserByEmail(findUserByEmail);
+            return ResponseEntity.ok("ok");
+        } catch(Exception e)
+        {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/reset-password/{email}")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> updatePassword(@RequestBody String password, @PathVariable String email) throws Exception {
+        Membre resultMembre;
+        try {
+            resultMembre = this.membreService.chercheEmail(email);
+
+            System.out.println(resultMembre);
+
+            resultMembre.setPassword(passwordEncoder.encode(password));
+
+            this.membreRepo.save(resultMembre);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
+    }
+
 
 //    @GetMapping(value = "/team/all")
 //    public ResponseEntity<?> getAllTeam(){
