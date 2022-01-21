@@ -33,10 +33,10 @@ public class Membre {
     private String isAdmin;
     private String couleur;
     private String smiley;
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name="TEAM_ID")
 //    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties("membre")
     private Team team;
@@ -44,24 +44,17 @@ public class Membre {
     public Membre() {
     }
 
-    public Membre(String nom, String prenom, LocalDate dateNaissance, @NotNull String email, @NotNull String password, String isAdmin, String couleur, String smiley, Team team, List<Role> roleList) {
+    public Membre(String nom, String prenom, String couleur, LocalDate dateNaissance, Team team, @NotNull String email, @NotNull String password, List<Role> roleList) {
         this.nom = nom;
         this.prenom = prenom;
+        this.couleur = couleur;
         this.dateNaissance = dateNaissance;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
-        this.couleur = couleur;
-        this.smiley = smiley;
         this.team = team;
         this.roleList=roleList;
     }
 
-    public Membre(@NotNull String email, @NotNull String password, List<Role> roleList) {
-        this.email = email;
-        this.password = password;
-        this.roleList=roleList;
-    }
 
 
     public int getId() {
@@ -72,6 +65,12 @@ public class Membre {
     }
     public String getNom() {
         return nom;
+    }
+    public String getCouleur() {
+        return couleur;
+    }
+    public void setCouleur(String couleur) {
+        this.couleur = couleur;
     }
     public void setNom(String nom) {
         this.nom = nom;
@@ -112,22 +111,6 @@ public class Membre {
     }
     public void setTeam(Team team) {
         this.team = team;
-    }
-
-    public String getCouleur() {
-        return couleur;
-    }
-
-    public void setCouleur(String couleur) {
-        this.couleur = couleur;
-    }
-
-    public String getSmiley() {
-        return smiley;
-    }
-
-    public void setSmiley(String smiley) {
-        this.smiley = smiley;
     }
 
     public List<Role> getRoleList() {

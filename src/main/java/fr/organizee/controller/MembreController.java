@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -29,6 +30,9 @@ public class MembreController {
 
     @Autowired
     private MembreService membreService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @ResponseBody
     public String home()
@@ -60,6 +64,45 @@ public class MembreController {
         return membreService.findAllUsers().stream().map(appUser -> new MembreDto(appUser.getEmail(), appUser.getRoleList())).collect(Collectors.toList());
 
     }
+    //cette methode ne fonctionne pas parce que ça affiche "trouvé" dans tous les cas
+    @GetMapping("/forgot-password")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> findUserByEmail(@RequestBody Membre findUserByEmail) {
+
+        try {
+            this.membreService.findUserByEmail(findUserByEmail);
+            return ResponseEntity.status(HttpStatus.OK).body("Email trouvé !");
+
+        } catch (EntityNotFoundException e) {
+
+            return ResponseEntity.status(HttpStatus.OK).body("Email introuvable !");
+        }
+
+    }
+
+    @PutMapping("/reset-password/{email}")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> updatePassword(@RequestBody String password, @PathVariable String email) throws Exception {
+        Membre resultMembre;
+        try {
+            resultMembre = this.membreService.chercheEmail(email);
+
+            System.out.println(resultMembre);
+
+            resultMembre.setPassword(passwordEncoder.encode(password));
+
+            System.out.println(password);
+
+            this.membreRepo.save(resultMembre);
+            System.out.println(resultMembre.getPassword());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
+    }
+
 
     //Récupérer les informations d'un membre par son ID
     @GetMapping(value = "/{id}")
