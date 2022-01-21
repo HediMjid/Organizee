@@ -44,24 +44,16 @@ public class Membre {
     public Membre() {
     }
 
-    public Membre(String nom, String prenom, LocalDate dateNaissance, @NotNull String email, @NotNull String password, String isAdmin, String couleur, String smiley, Team team, List<Role> roleList) {
+    public Membre(String nom, String prenom, LocalDate dateNaissance, Team team, @NotNull String email, @NotNull String password, List<Role> roleList) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
-        this.couleur = couleur;
-        this.smiley = smiley;
         this.team = team;
         this.roleList=roleList;
     }
 
-    public Membre(@NotNull String email, @NotNull String password, List<Role> roleList) {
-        this.email = email;
-        this.password = password;
-        this.roleList=roleList;
-    }
 
 
     public int getId() {
@@ -114,23 +106,7 @@ public class Membre {
         this.team = team;
     }
 
-    public String getCouleur() {
-        return couleur;
-    }
-
-    public void setCouleur(String couleur) {
-        this.couleur = couleur;
-    }
-
-    public String getSmiley() {
-        return smiley;
-    }
-
-    public void setSmiley(String smiley) {
-        this.smiley = smiley;
-    }
-
-    public List<Role> getRoleList() {
+     public List<Role> getRoleList() {
         return roleList;
     }
     public void setRoleList(List<Role> roleList) {
