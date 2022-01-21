@@ -44,9 +44,10 @@ public class Membre {
     public Membre() {
     }
 
-    public Membre(String nom, String prenom, LocalDate dateNaissance, Team team, @NotNull String email, @NotNull String password, List<Role> roleList) {
+    public Membre(String nom, String prenom, String couleur, LocalDate dateNaissance, Team team, @NotNull String email, @NotNull String password, List<Role> roleList) {
         this.nom = nom;
         this.prenom = prenom;
+        this.couleur = couleur;
         this.dateNaissance = dateNaissance;
         this.email = email;
         this.password = password;
@@ -64,6 +65,12 @@ public class Membre {
     }
     public String getNom() {
         return nom;
+    }
+    public String getCouleur() {
+        return couleur;
+    }
+    public void setCouleur(String couleur) {
+        this.couleur = couleur;
     }
     public void setNom(String nom) {
         this.nom = nom;
