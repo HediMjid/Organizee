@@ -12,16 +12,16 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("team")
     private List<Membre> membres = new ArrayList<>();
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("team")
     private List<Contact> contacts = new ArrayList<>();
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("team")
     private List<TodoList> todolists = new ArrayList<>();
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("team")
     private List<Menu> menus = new ArrayList<>();
 

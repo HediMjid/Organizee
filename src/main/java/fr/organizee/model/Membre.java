@@ -33,10 +33,10 @@ public class Membre {
     private String isAdmin;
     private String couleur;
     private String smiley;
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name="TEAM_ID")
 //    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties("membre")
     private Team team;
@@ -44,9 +44,10 @@ public class Membre {
     public Membre() {
     }
 
-    public Membre(String nom, String prenom, LocalDate dateNaissance, Team team, @NotNull String email, @NotNull String password, List<Role> roleList) {
+    public Membre(String nom, String prenom, String couleur, LocalDate dateNaissance, Team team, @NotNull String email, @NotNull String password, List<Role> roleList) {
         this.nom = nom;
         this.prenom = prenom;
+        this.couleur = couleur;
         this.dateNaissance = dateNaissance;
         this.email = email;
         this.password = password;
@@ -64,6 +65,12 @@ public class Membre {
     }
     public String getNom() {
         return nom;
+    }
+    public String getCouleur() {
+        return couleur;
+    }
+    public void setCouleur(String couleur) {
+        this.couleur = couleur;
     }
     public void setNom(String nom) {
         this.nom = nom;
@@ -106,7 +113,7 @@ public class Membre {
         this.team = team;
     }
 
-     public List<Role> getRoleList() {
+    public List<Role> getRoleList() {
         return roleList;
     }
     public void setRoleList(List<Role> roleList) {

@@ -16,7 +16,7 @@ public class Contact {
     private String email;
     private String adresse;
     private LocalDate dateNaissance;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties("contact")
     private Team team;
