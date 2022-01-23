@@ -33,7 +33,7 @@ public class Membre {
     private String isAdmin;
     private String couleur;
     private String smiley;
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name="TEAM_ID")
 //    @JsonIgnore
     @ManyToOne
@@ -113,7 +113,7 @@ public class Membre {
         this.team = team;
     }
 
-     public List<Role> getRoleList() {
+    public List<Role> getRoleList() {
         return roleList;
     }
     public void setRoleList(List<Role> roleList) {
