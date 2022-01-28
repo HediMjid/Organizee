@@ -41,7 +41,7 @@ public class SendMailServiceImpl implements SendMailService {
 
         helper.setSubject(mail.getSubject());
 
-        String htmlMsg = "<h3>Im testing send a HTML email</h3>"
+        String htmlMsg = "<h3>Test d'envoi de mail au format HTML</h3>"
                 +"<img src='http://www.apache.org/images/asf_logo_wide.gif'>";
 
         msg.setContent(htmlMsg, "text/html");

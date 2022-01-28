@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/sendmail")
 public class MailController {
     SendMailService service;
 
@@ -20,7 +20,7 @@ public class MailController {
         this.service = service;
     }
 
-    @PostMapping("/send")
+    @PostMapping("/text")
     public ResponseEntity<String> sendMail(@RequestBody Mail mail) {
         service.sendMail(mail);
         return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
