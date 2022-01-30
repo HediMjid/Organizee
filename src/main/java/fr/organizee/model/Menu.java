@@ -15,7 +15,7 @@ public class Menu {
     private int validationProposition;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties("menu")
+    @JsonIgnoreProperties({"menu","membre"})
     private Team team;
 
     public Menu() {

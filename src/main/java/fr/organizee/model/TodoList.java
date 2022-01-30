@@ -1,5 +1,6 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ public class TodoList {
     private String nom;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties("todolist")
+    @JsonIgnoreProperties({"todolist","membre"})
     private Team team;
     @OneToMany(mappedBy = "todolist", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("todolist")
