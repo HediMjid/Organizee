@@ -55,7 +55,7 @@ public class SendMailServiceImpl implements SendMailService {
 
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 
-        helper.setTo("to_@email");
+        helper.setTo("destinataire@email");
 
         helper.setSubject("Testing from Spring Boot");
 
