@@ -1,5 +1,6 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Contact {
     private LocalDate dateNaissance;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties("contact")
+    @JsonIgnoreProperties({"contact","membre"})
     private Team team;
 
     public Contact() {

@@ -1,5 +1,6 @@
 package fr.organizee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -14,13 +15,13 @@ public class Evenement {
     private LocalDateTime eventFin;
     private int allDay;
     private String libelle;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="MEMBRE_ID")
     @JsonIgnoreProperties("evenement")
     private Membre membre;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties("evenement")
+    @JsonIgnoreProperties({"evenement", "membre"})
     private Team team;
 
     public Evenement() {
