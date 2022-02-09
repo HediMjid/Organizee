@@ -37,5 +37,10 @@ INSERT INTO `tache` (`id`, `etat`, `texte`, `todolist_id`) VALUES
 	(4, 0, 'Acheter un sapin', 3),
 	(5, 0, 'Trouver un repas', 3);
 
-INSERT INTO `evenement` (`id`, `all_day`, `event_debut`, `event_fin`, `libelle`, `membre_id`, `team_id`) VALUES
-	(1, 0, '2022-01-13 09:00:33', '2022-01-13 13:04:38', 'Simplon', 1, 1);
+INSERT INTO `evenement` (`id`, `all_day`, `start`, `end`, `text`, `membre_id`, `team_id`) VALUES
+	(1, 0, '2022-02-04 09:00:00', '2022-02-04 13:00:00', 'Simplon', 1, 1),
+	(2, 0, '2022-02-03 12:00:00', '2022-02-03 13:00:00', 'Footing', 2, 1);
+
+INSERT INTO `menu` (`id`, `date_menu`, `libelle`, `validation_proposition`, `team_id`) VALUES
+	(1, '2022-01-13', 'Lasagnes', 1, 1),
+	(2, '2022-01-03', 'Kebab', 1, 1);
