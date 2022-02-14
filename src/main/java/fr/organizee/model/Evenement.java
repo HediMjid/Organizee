@@ -11,10 +11,10 @@ public class Evenement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime eventDebut;
-    private LocalDateTime eventFin;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int allDay;
-    private String libelle;
+    private String text;
     @ManyToOne
     @JoinColumn(name="MEMBRE_ID")
     @JsonIgnoreProperties("evenement")
@@ -27,12 +27,12 @@ public class Evenement {
     public Evenement() {
     }
 
-    public Evenement(int id, LocalDateTime eventDebut, LocalDateTime eventFin, int allDay, String libelle, Membre membre, Team team) {
+    public Evenement(int id, LocalDateTime start, LocalDateTime end, int allDay, String text, Membre membre, Team team) {
         this.id = id;
-        this.eventDebut = eventDebut;
-        this.eventFin = eventFin;
+        this.start = start;
+        this.end = end;
         this.allDay = allDay;
-        this.libelle = libelle;
+        this.text = text;
         this.membre = membre;
         this.team = team;
     }
@@ -45,20 +45,20 @@ public class Evenement {
         this.id = id;
     }
 
-    public LocalDateTime getEventDebut() {
-        return eventDebut;
+    public LocalDateTime getStart() {
+        return start;
     }
 
-    public void setEventDebut(LocalDateTime eventDebut) {
-        this.eventDebut = eventDebut;
+    public void setStart(LocalDateTime start) {
+        this.start = start;
     }
 
-    public LocalDateTime getEventFin() {
-        return eventFin;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
-    public void setEventFin(LocalDateTime eventFin) {
-        this.eventFin = eventFin;
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 
     public int getAllDay() {
@@ -69,12 +69,12 @@ public class Evenement {
         this.allDay = allDay;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getText() {
+        return text;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Membre getMembre() {
@@ -97,10 +97,10 @@ public class Evenement {
     public String toString() {
         return "Evenement{" +
                 "id=" + id +
-                ", eventDebut=" + eventDebut +
-                ", eventFin=" + eventFin +
+                ", start=" + start +
+                ", end=" + end +
                 ", allDay=" + allDay +
-                ", libelle='" + libelle + '\'' +
+                ", text='" + text + '\'' +
                 ", membre=" + membre +
                 ", team=" + team +
                 '}';
