@@ -1,6 +1,7 @@
 package fr.organizee.controller;
 
 import fr.organizee.model.Tache;
+import fr.organizee.model.TodoList;
 import fr.organizee.repository.TacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,10 +62,13 @@ public class TacheController {
     }
 
     // Ajoute une tache
-    @PostMapping(value="/add", produces="application/json", consumes="application/json")
-    public ResponseEntity<?> addTache(@RequestBody Tache tache){
+    @PostMapping(value="/add/{idTodoList}", produces="application/json", consumes="application/json")
+    public ResponseEntity<?> addTache(@RequestBody Tache tache,@PathVariable Integer idTodoList){
         Tache resultTache = null;
         try {
+            TodoList todolist=new TodoList();
+            todolist.setId(idTodoList);
+            tache.setTodolist(todolist);
             resultTache = tacheRepo.saveAndFlush(tache);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
