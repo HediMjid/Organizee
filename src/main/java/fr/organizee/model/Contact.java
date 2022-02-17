@@ -11,6 +11,7 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String couleur;
     private String nom;
     private String prenom;
     private String telephone;
@@ -18,14 +19,15 @@ public class Contact {
     private String adresse;
     private LocalDate dateNaissance;
     @ManyToOne
-    @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties({"contact","membre"})
+    @JoinColumn(name = "TEAM_ID")
+    @JsonIgnoreProperties({"contact", "membre"})
     private Team team;
 
     public Contact() {
     }
 
-    public Contact(String nom, String prenom, String telephone, String email, String adresse, LocalDate dateNaissance, Team team) {
+    public Contact(String couleur, String nom, String prenom, String telephone, String email, String adresse, LocalDate dateNaissance, Team team) {
+        this.couleur = couleur;
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
@@ -41,6 +43,14 @@ public class Contact {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCouleur() {
+        return couleur;
+    }
+
+    public void setCouleur(String couleur) {
+        this.couleur = couleur;
     }
 
     public String getNom() {
@@ -94,6 +104,7 @@ public class Contact {
     public Team getTeam() {
         return team;
     }
+
     public void setTeam(Team team) {
         this.team = team;
     }
@@ -102,6 +113,7 @@ public class Contact {
     public String toString() {
         return "Contact{" +
                 "id=" + id +
+                ", couleur='" + couleur + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", telephone='" + telephone + '\'' +
