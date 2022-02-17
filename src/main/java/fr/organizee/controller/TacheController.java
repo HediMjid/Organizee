@@ -77,11 +77,14 @@ public class TacheController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resultTache);
     }
 
-    //Met a jour les informations d'une date avec son ID
+    //Met a jour les informations d'une tache avec son ID
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateTache(@RequestBody Tache tache, @PathVariable Integer id) throws Exception {
         Tache resultTache = null;
         try {
+            TodoList todolist=new TodoList();
+            todolist.setId(tacheRepo.findById(tache.getId()).get().getTodolist().getId());
+            tache.setTodolist(todolist);
             resultTache = tacheRepo.save(tache);
 
         } catch (Exception e) {
