@@ -6,11 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-<<<<<<< HEAD
-        <module name="organizee" />
-=======
         <module name="Organizee" />
->>>>>>> b147bc406c22caa9c817c7189a325058d8550a69
+        <module name="organizee" />
       </profile>
     </annotationProcessing>
   </component>
