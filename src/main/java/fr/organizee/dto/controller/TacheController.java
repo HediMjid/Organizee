@@ -1,4 +1,4 @@
-package fr.organizee.controller;
+package fr.organizee.dto.controller;
 
 import fr.organizee.model.Tache;
 import fr.organizee.model.TodoList;
