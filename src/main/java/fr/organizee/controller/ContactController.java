@@ -1,4 +1,4 @@
-package fr.organizee.dto.controller;
+package fr.organizee.controller;
 
 import fr.organizee.model.Contact;
 import fr.organizee.repository.ContactRepository;
@@ -19,6 +19,7 @@ public class ContactController {
 
     @Autowired
     private ContactRepository contactRepo;
+
 
     //Récupère les infos d'un contact par son ID
     @GetMapping(value = "/{id}")

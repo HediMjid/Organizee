@@ -1,4 +1,4 @@
-package fr.organizee.dto.controller;
+package fr.organizee.controller;
 
 import fr.organizee.model.Mail;
 import fr.organizee.service.SendMailService;
