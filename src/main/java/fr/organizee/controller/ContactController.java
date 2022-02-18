@@ -20,6 +20,7 @@ public class ContactController {
     @Autowired
     private ContactRepository contactRepo;
 
+
     //Récupère les infos d'un contact par son ID
     @GetMapping(value = "/{id}")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")

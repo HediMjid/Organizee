@@ -28,13 +28,14 @@ public class MembreController {
 
     @Autowired
     private MembreRepository membreRepo;
+  
     @Autowired
     private MembreService membreService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     public MembreController() {}
-
+  
     @ResponseBody
     public String home()
     {
@@ -176,8 +177,6 @@ public class MembreController {
     }
 
     /********************* Gestion Mot de Passe ************************************/
-
-
     //cette methode ne fonctionne pas parce que ça affiche "trouvé" dans tous les cas
     @GetMapping("/forgot-password")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
@@ -216,7 +215,4 @@ public class MembreController {
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
     }
-
-
-
 }
