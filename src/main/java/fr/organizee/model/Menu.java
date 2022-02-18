@@ -12,21 +12,21 @@ public class Menu {
     private int id;
     private String libelle;
     private LocalDate dateMenu;
-    private int validationProposition;
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties("menu")
-    private Team team;
+    private String repas;
+   // private int validationProposition;
     @ManyToOne
-    private Membre membre;
+    @JoinColumn(name="TEAM_ID")
+    @JsonIgnoreProperties({"menu","membre"})
+    private Team team;
 
     public Menu() {
     }
 
-    public Menu(String libelle, LocalDate dateMenu, int validationProposition) {
+    public Menu(String libelle, LocalDate dateMenu,String repas, Team team) {
         this.libelle = libelle;
         this.dateMenu = dateMenu;
-        this.validationProposition=validationProposition;
+        this.repas= repas;
+        this.team = team;
     }
 
     public int getId() {
@@ -53,12 +53,38 @@ public class Menu {
         this.dateMenu = dateMenu;
     }
 
+    public String getRepas() {
+        return repas;
+    }
+
+    public void setRepas(String repas) {
+        this.repas = repas;
+    }
+
+   // public int getValidationProposition() {
+     //   return validationProposition;
+    //}
+
+    //public void setValidationProposition(int validationProposition) {
+     //   this.validationProposition = validationProposition;
+   // }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
                 "id=" + id +
                 ", libelle='" + libelle + '\'' +
                 ", dateMenu=" + dateMenu +
+                ", team=" + team +
+                ", repas=" + repas +
                 '}';
     }
 }
