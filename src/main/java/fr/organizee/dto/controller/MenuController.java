@@ -67,11 +67,15 @@ public class MenuController {
     }
 
     //Mise a jour d'un menu par son ID
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{team_id}/{id}")
     //@PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer id) throws Exception {
+    public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer team_id, @PathVariable Integer id) throws Exception {
         Menu resultMenu = null;
         try {
+            menu.setId(menuRepository.findById(id).get().getId());
+            Team team=new Team();
+            team.setId(team_id);
+            menu.setTeam(team);
             resultMenu = menuRepository.save(menu);
 
         } catch (Exception e) {
