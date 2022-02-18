@@ -12,7 +12,7 @@ public class Menu {
     private int id;
     private String libelle;
     private LocalDate dateMenu;
-    private int validationProposition;
+   // private int validationProposition;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties({"menu","membre"})
@@ -21,10 +21,10 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(String libelle, LocalDate dateMenu, int validationProposition, Team team) {
+    public Menu(String libelle, LocalDate dateMenu, Team team) {
         this.libelle = libelle;
         this.dateMenu = dateMenu;
-        this.validationProposition=validationProposition;
+        //this.validationProposition=validationProposition;
         this.team = team;
     }
 
@@ -52,13 +52,13 @@ public class Menu {
         this.dateMenu = dateMenu;
     }
 
-    public int getValidationProposition() {
-        return validationProposition;
-    }
+   // public int getValidationProposition() {
+     //   return validationProposition;
+    //}
 
-    public void setValidationProposition(int validationProposition) {
-        this.validationProposition = validationProposition;
-    }
+    //public void setValidationProposition(int validationProposition) {
+     //   this.validationProposition = validationProposition;
+   // }
 
     public Team getTeam() {
         return team;
@@ -74,7 +74,6 @@ public class Menu {
                 "id=" + id +
                 ", libelle='" + libelle + '\'' +
                 ", dateMenu=" + dateMenu +
-                ", validationProposition=" + validationProposition +
                 ", team=" + team +
                 '}';
     }

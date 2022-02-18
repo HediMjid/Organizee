@@ -1,4 +1,4 @@
-package fr.organizee.controller;
+package fr.organizee.dto.controller;
 
 import fr.organizee.dto.JsonWebToken;
 import fr.organizee.dto.MembreDto;
