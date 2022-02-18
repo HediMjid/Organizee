@@ -1,4 +1,4 @@
-package fr.organizee.controller;
+package fr.organizee.dto.controller;
 
 import fr.organizee.dto.JsonWebToken;
 import fr.organizee.dto.MembreDto;
@@ -59,7 +59,7 @@ public class MembreController {
     }
 
     @GetMapping("/admin/all")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
     public List<MembreDto> getAllAdminUsers() {
         return membreService.findAllUsers().stream().map(appUser -> new MembreDto(appUser.getEmail(), appUser.getRoleList())).collect(Collectors.toList());
 
@@ -168,34 +168,4 @@ public class MembreController {
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
     }
-
-//    UPDATE SUR UN CHAMPS
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable Integer id) throws Exception {
-//        Membre resultMembre = null;
-//        Membre oldMembre = membreRepo.getById(id);
-//        oldMembre.setNom(membre.getNom());
-//        //Membre resultMembre = membreRepo.getById(id);
-//        try {
-//            resultMembre = membreRepo.save(oldMembre);
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
-//    }
-
-//    @GetMapping(value = "/team/{id}")
-//    public ResponseEntity<?> findTeamById(@PathVariable int id){
-//        Optional<Team> liste = null;
-//        try
-//        {
-//            liste = teamRepo.findById(id);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(liste);
-//    }
 }
