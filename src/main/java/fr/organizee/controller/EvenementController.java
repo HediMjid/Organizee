@@ -1,4 +1,4 @@
-package fr.organizee.dto.controller;
+package fr.organizee.controller;
 
 import fr.organizee.model.Evenement;
 import fr.organizee.model.Menu;
