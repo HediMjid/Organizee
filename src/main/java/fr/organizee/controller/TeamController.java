@@ -1,4 +1,4 @@
-package fr.organizee.dto.controller;
+package fr.organizee.controller;
 
 import fr.organizee.model.Team;
 import fr.organizee.repository.TeamRepository;
@@ -21,7 +21,7 @@ public class TeamController {
     @Autowired
     private TeamRepository teamRepo;
 
-//    @RequestMapping("/teams")
+    //    @RequestMapping("/teams")
     @ResponseBody
     public String home()
     {
