@@ -1,4 +1,4 @@
-package fr.organizee.controller;
+package fr.organizee.dto.controller;
 
 import fr.organizee.dto.JsonWebToken;
 import fr.organizee.dto.MembreDto;
@@ -45,7 +45,7 @@ public class MembreController {
 
     // Récupère tout les membres de la base
     @GetMapping(value = "/all")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> getAll(){
         List<Membre> liste = null;
         try
