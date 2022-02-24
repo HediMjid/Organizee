@@ -41,7 +41,7 @@ public class MembreController {
     {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>Affichages des membres</h1>");
-        sb.append("<ul><li><a href='http://localhost:8080/membres/all'>Liste des <strong>membres</strong></a></li>");
+        sb.append("<ul><li><a href='http://localhost:8088/membres/all'>Liste des <strong>membres</strong></a></li>");
         return  sb.toString();
     }
 
@@ -160,7 +160,7 @@ public class MembreController {
             membreRepo.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("Membre supprimé !");
         } catch (Exception e) {
-            MembreNotFoundException membreNotFoundException = new membreNotFoundException(id);
+            MembreNotFoundException membreNotFoundException = new MembreNotFoundException(id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(membreNotFoundException.getMessage());
         }
     }
