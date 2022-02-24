@@ -160,7 +160,7 @@ public class MembreController {
             membreRepo.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("Membre supprimé !");
         } catch (Exception e) {
-            MembreNotFoundException membreNotFoundException = new membreNotFoundException(id);
+            MembreNotFoundException membreNotFoundException = new MembreNotFoundException(id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(membreNotFoundException.getMessage());
         }
     }

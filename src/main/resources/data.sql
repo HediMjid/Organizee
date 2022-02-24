@@ -41,6 +41,12 @@ INSERT INTO `evenement` (`id`, `all_day`, `start`, `end`, `text`, `membre_id`, `
 	(1, 0, '2022-02-04 09:00:00', '2022-02-04 13:00:00', 'Simplon', 1, 1),
 	(2, 0, '2022-02-03 12:00:00', '2022-02-03 13:00:00', 'Footing', 2, 1);
 
-INSERT INTO `menu` (`id`, `date_menu`, `libelle`, `validation_proposition`, `team_id`) VALUES
-	(1, '2022-01-13', 'Lasagnes', 1, 1),
-	(2, '2022-01-03', 'Kebab', 1, 1);
+
+INSERT INTO menu (id, date_menu, repas_midi, team_id, repas_soir) VALUES
+(1, '2022-02-21', 'canard à l orange', 4, 'pâtes au beurre'),
+(4, '2022-02-22', 'lasagnes', 4, 'riz sauté'),
+(11, '2022-02-23', 'roti de dinde orloff', 4, 'choucroute'),
+(13, '2022-02-24', 'hachis parmentier', 4, 'salade composée'),
+(15, '2022-02-25', 'legumes', 4, 'croque monsieurs'),
+(17, '2022-02-26', 'sauté de veau', 4, 'soupe et jambon'),
+(21, '2022-02-27', 'lasagnes', 4, 'pizza');
