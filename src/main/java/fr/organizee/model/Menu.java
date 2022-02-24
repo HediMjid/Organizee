@@ -10,10 +10,9 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String libelle;
     private LocalDate dateMenu;
-    private String repas;
-   // private int validationProposition;
+    private String repasMidi;
+    private String repasSoir;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
     @JsonIgnoreProperties({"menu","membre"})
@@ -22,10 +21,10 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(String libelle, LocalDate dateMenu,String repas, Team team) {
-        this.libelle = libelle;
+    public Menu(LocalDate dateMenu,String repasMidi, String repasSoir, Team team) {
         this.dateMenu = dateMenu;
-        this.repas= repas;
+        this.repasMidi= repasMidi;
+        this.repasSoir= repasSoir;
         this.team = team;
     }
 
@@ -37,14 +36,6 @@ public class Menu {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
     public LocalDate getDateMenu() {
         return dateMenu;
     }
@@ -53,21 +44,21 @@ public class Menu {
         this.dateMenu = dateMenu;
     }
 
-    public String getRepas() {
-        return repas;
+    public String getRepasMidi() {
+        return repasMidi;
     }
 
-    public void setRepas(String repas) {
-        this.repas = repas;
+    public void setRepasMidi(String repasMidi) {
+        this.repasMidi = repasMidi;
     }
 
-   // public int getValidationProposition() {
-     //   return validationProposition;
-    //}
+    public String getRepasSoir() {
+        return repasSoir;
+    }
 
-    //public void setValidationProposition(int validationProposition) {
-     //   this.validationProposition = validationProposition;
-   // }
+    public void setRepasSoir(String repasSoir) {
+        this.repasSoir = repasSoir;
+    }
 
     public Team getTeam() {
         return team;
@@ -77,14 +68,15 @@ public class Menu {
         this.team = team;
     }
 
+
     @Override
     public String toString() {
         return "Menu{" +
                 "id=" + id +
-                ", libelle='" + libelle + '\'' +
                 ", dateMenu=" + dateMenu +
+                ", repasMidi='" + repasMidi + '\'' +
+                ", repasSoir='" + repasSoir + '\'' +
                 ", team=" + team +
-                ", repas=" + repas +
                 '}';
     }
 }
