@@ -6,6 +6,8 @@ import fr.organizee.exception.ExistingUsernameException;
 import fr.organizee.exception.InvalidCredentialsException;
 import fr.organizee.exception.MembreNotFoundException;
 import fr.organizee.model.Membre;
+import fr.organizee.model.Menu;
+import fr.organizee.model.Team;
 import fr.organizee.repository.MembreRepository;
 import fr.organizee.service.MembreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class MembreController {
     {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>Affichages des membres</h1>");
-        sb.append("<ul><li><a href='http://localhost:8080/membres/all'>Liste des <strong>membres</strong></a></li>");
+        sb.append("<ul><li><a href='http://localhost:8088/membres/all'>Liste des <strong>membres</strong></a></li>");
         return  sb.toString();
     }
 
@@ -103,7 +105,24 @@ public class MembreController {
     }
 
     /**
-     * Ajouter un membre et inscription
+     * Rechercher un membre par l'Id de sa team
+     * @return
+     * http://localhost:8088/membres/1
+     */
+    @GetMapping(value = "team/{team_id}")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> findByTeamId(@PathVariable int team_id) {
+        List<Membre> membres = null;
+        try {
+            membres = membreRepo.FindMembresByTeam(team_id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(membres);
+    }
+
+    /**
+     * Inscription
      * @return
      * http://localhost:8088/membres/sign-up
      */
@@ -115,6 +134,28 @@ public class MembreController {
         } catch (ExistingUsernameException ex) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    /**
+     * Ajout d'un membre
+     * @return
+     * http://localhost:8088/membres/add
+     */
+    @PostMapping(value="/add/{team_id}", produces="application/json", consumes= "application/json")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> addMembre(@RequestBody Membre membre, @PathVariable Integer team_id){
+        Membre resultMembre = null;
+        try{
+            Team team = new Team();
+            team.setId(team_id);
+            membre.setTeam(team);
+            //resultMembre = membreRepo.saveAndFlush(membre);
+            return ResponseEntity.ok(new JsonWebToken(membreService.signup(membre)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+        //return ResponseEntity.status(HttpStatus.CREATED).body(resultMembre);
     }
 
     /**

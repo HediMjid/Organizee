@@ -2,6 +2,7 @@ package fr.organizee.repository;
 
 import fr.organizee.model.Contact;
 import fr.organizee.model.Membre;
+import fr.organizee.model.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,10 @@ import java.util.Optional;
 
 @Repository
 public interface MembreRepository extends JpaRepository<Membre, Integer> {
+
+    @Query(value = "select * from membre where team_id = :team_id", nativeQuery = true)
+    List<Membre> FindMembresByTeam(@Param("team_id") int team_id);
+
     Membre findByNom(String nom);
 
     Optional<Membre> findByEmail(String email);
