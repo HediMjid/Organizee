@@ -10,21 +10,21 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String libelle;
     private LocalDate dateMenu;
-    private int validationProposition;
+    private String repasMidi;
+    private String repasSoir;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties("menu")
+    @JsonIgnoreProperties({"menu","membre"})
     private Team team;
 
     public Menu() {
     }
 
-    public Menu(String libelle, LocalDate dateMenu, int validationProposition, Team team) {
-        this.libelle = libelle;
+    public Menu(LocalDate dateMenu,String repasMidi, String repasSoir, Team team) {
         this.dateMenu = dateMenu;
-        this.validationProposition=validationProposition;
+        this.repasMidi= repasMidi;
+        this.repasSoir= repasSoir;
         this.team = team;
     }
 
@@ -36,14 +36,6 @@ public class Menu {
         this.id = id;
     }
 
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
     public LocalDate getDateMenu() {
         return dateMenu;
     }
@@ -52,12 +44,20 @@ public class Menu {
         this.dateMenu = dateMenu;
     }
 
-    public int getValidationProposition() {
-        return validationProposition;
+    public String getRepasMidi() {
+        return repasMidi;
     }
 
-    public void setValidationProposition(int validationProposition) {
-        this.validationProposition = validationProposition;
+    public void setRepasMidi(String repasMidi) {
+        this.repasMidi = repasMidi;
+    }
+
+    public String getRepasSoir() {
+        return repasSoir;
+    }
+
+    public void setRepasSoir(String repasSoir) {
+        this.repasSoir = repasSoir;
     }
 
     public Team getTeam() {
@@ -68,13 +68,14 @@ public class Menu {
         this.team = team;
     }
 
+
     @Override
     public String toString() {
         return "Menu{" +
                 "id=" + id +
-                ", libelle='" + libelle + '\'' +
                 ", dateMenu=" + dateMenu +
-                ", validationProposition=" + validationProposition +
+                ", repasMidi='" + repasMidi + '\'' +
+                ", repasSoir='" + repasSoir + '\'' +
                 ", team=" + team +
                 '}';
     }

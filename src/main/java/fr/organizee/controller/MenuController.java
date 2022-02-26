@@ -1,6 +1,7 @@
 package fr.organizee.controller;
 
 import fr.organizee.model.Menu;
+import fr.organizee.model.Team;
 import fr.organizee.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,11 +50,14 @@ public class MenuController {
     }
 
     //Ajoute un nouveau menu
-    @PostMapping(value="/add")
+    @PostMapping(value="/add/{team_id}", produces="application/json", consumes= "application/json")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> addMenu(@RequestBody Menu menu){
+    public ResponseEntity<?> addMenu(@RequestBody Menu menu, @PathVariable Integer team_id){
         Menu resultMenu = null;
         try {
+            Team team=new Team();
+            team.setId(team_id);
+            menu.setTeam(team);
             resultMenu = menuRepository.saveAndFlush(menu);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -63,11 +67,15 @@ public class MenuController {
     }
 
     //Mise a jour d'un menu par son ID
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{team_id}/{id}")
     //@PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer id) throws Exception {
+    public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer team_id, @PathVariable Integer id) throws Exception {
         Menu resultMenu = null;
         try {
+            menu.setId(menuRepository.findById(id).get().getId());
+            Team team=new Team();
+            team.setId(team_id);
+            menu.setTeam(team);
             resultMenu = menuRepository.save(menu);
 
         } catch (Exception e) {

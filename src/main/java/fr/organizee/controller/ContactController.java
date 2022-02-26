@@ -20,8 +20,10 @@ public class ContactController {
     @Autowired
     private ContactRepository contactRepo;
 
+
+    //Récupère les infos d'un contact par son ID
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findById(@PathVariable int id){
         Optional<Contact> contact = null;
         try
@@ -34,8 +36,9 @@ public class ContactController {
         return ResponseEntity.status(HttpStatus.OK).body(contact);
     }
 
+    //Récupère les infos d'un contact par la team ID
     @GetMapping(value = "team/{team_id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findByTeamId(@PathVariable int team_id){
         List<Contact> contacts = null;
         try
@@ -44,12 +47,12 @@ public class ContactController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(contacts);
     }
 
+    //Ajoute un nouveau contact
     @PostMapping(value="/add")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> addContact(@RequestBody Contact contact){
         Contact resultContact = null;
         try {
@@ -61,8 +64,9 @@ public class ContactController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resultContact);
     }
 
+    //Mise à jour du contact par son ID
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> updateContact(@RequestBody Contact contact, @PathVariable Integer id) throws Exception {
         Contact resultContact = null;
         try {
@@ -75,8 +79,9 @@ public class ContactController {
         return ResponseEntity.status(HttpStatus.OK).body(resultContact);
     }
 
+    //Efface le contact par on ID
     @DeleteMapping(value = "/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteContact(@PathVariable int id){
         try {
             contactRepo.delete(contactRepo.getById(id));
