@@ -4,14 +4,12 @@ import fr.organizee.model.Mail;
 import fr.organizee.service.SendMailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/sendmail")
 public class MailController {
     SendMailService service;
