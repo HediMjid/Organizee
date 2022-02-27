@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -219,14 +220,16 @@ public class MembreController {
 
     /********************* Gestion Mot de Passe ************************************/
     //cette methode ne fonctionne pas parce que ça affiche "trouvé" dans tous les cas
-    @GetMapping("/forgot-password")
+    @PostMapping("/forgot-password")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> findUserByEmail(@RequestBody Membre findUserByEmail) {
-
+    public ResponseEntity<?> findUserByEmail(@RequestBody Membre membre) {
+        Membre resultMembre = null;
         try {
-            this.membreService.findUserByEmail(findUserByEmail);
-            return ResponseEntity.status(HttpStatus.OK).body("Email trouvé !");
-
+            resultMembre = membreRepo.chercheEmail(membre.getEmail());
+            String uuid = UUID.randomUUID().toString();
+            resultMembre.setPassword(uuid);
+            membreRepo.saveAndFlush(resultMembre);
+            return ResponseEntity.status(HttpStatus.OK).body(uuid);
         } catch (EntityNotFoundException e) {
 
             return ResponseEntity.status(HttpStatus.OK).body("Email introuvable !");
@@ -234,22 +237,14 @@ public class MembreController {
 
     }
 
-    @PutMapping("/reset-password/{email}")
+    @PutMapping("/reset-password/{uuid}")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> updatePassword(@RequestBody String password, @PathVariable String email) throws Exception {
-        Membre resultMembre;
+    public ResponseEntity<?> updatePassword(@RequestBody Membre membre, @PathVariable String uuid) throws Exception {
+        Membre resultMembre = null;
         try {
-            resultMembre = this.membreService.chercheEmail(email);
-
-            System.out.println(resultMembre);
-
-            resultMembre.setPassword(passwordEncoder.encode(password));
-
-            System.out.println(password);
-
-            this.membreRepo.save(resultMembre);
-            System.out.println(resultMembre.getPassword());
-
+            resultMembre = membreRepo.findByUUID(uuid);
+            resultMembre.setPassword(passwordEncoder.encode(membre.getPassword()));
+            membreRepo.saveAndFlush(resultMembre);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

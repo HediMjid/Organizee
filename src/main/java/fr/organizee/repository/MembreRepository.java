@@ -21,6 +21,9 @@ public interface MembreRepository extends JpaRepository<Membre, Integer> {
 
     Optional<Membre> findByEmail(String email);
 
+    @Query(value = "select * from membre where password = :uuid", nativeQuery = true)
+    Membre findByUUID(@Param("uuid") String uuid);
+
     @Query(value = "select * from membre where email = :email", nativeQuery = true)
     Membre chercheEmail(@Param("email") String email);
 
