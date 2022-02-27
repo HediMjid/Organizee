@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TacheRepository extends JpaRepository<Tache, Integer> {
+public interface
+TacheRepository extends JpaRepository<Tache, Integer> {
 
     // N'est plus utilisé normalement
     @Query(value = "select * from todo_list, tache where todo_list.team_id = :team_id and todo_list.id = tache.todolist_id", nativeQuery = true)

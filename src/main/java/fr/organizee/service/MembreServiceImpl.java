@@ -17,7 +17,8 @@ import fr.organizee.repository.MembreRepository;
 import fr.organizee.security.JwtTokenProvider;
 
 @Service
-public class MembreServiceImpl implements MembreService {
+public class
+MembreServiceImpl implements MembreService {
 
     @Autowired
     private MembreRepository membreRepository; // permet communication avec la BD
