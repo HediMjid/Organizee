@@ -15,7 +15,7 @@ public class Menu {
     private String repasSoir;
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties({"menu","membre"})
+    @JsonIgnoreProperties({"menu"})
     private Team team;
 
     public Menu() {

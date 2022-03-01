@@ -67,7 +67,7 @@ public class MenuController {
     }
 
     //Mise a jour d'un menu par son ID
-    @PutMapping("/update/{team_id}/{id}")
+    @PutMapping(value="/update/{team_id}/{id}", produces="application/json", consumes= "application/json")
     //@PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer team_id, @PathVariable Integer id) throws Exception {
         Menu resultMenu = null;
