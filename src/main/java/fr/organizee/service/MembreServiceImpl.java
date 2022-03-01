@@ -17,7 +17,8 @@ import fr.organizee.repository.MembreRepository;
 import fr.organizee.security.JwtTokenProvider;
 
 @Service
-public class MembreServiceImpl implements MembreService {
+public class
+MembreServiceImpl implements MembreService {
 
     @Autowired
     private MembreRepository membreRepository; // permet communication avec la BD
@@ -48,7 +49,9 @@ public class MembreServiceImpl implements MembreService {
     @Override
     public String signup(Membre membre) throws ExistingUsernameException {
         if (!membreRepository.existsByEmail(membre.getEmail())) {
-            Membre membreToSave = new Membre(membre.getEmail(), passwordEncoder.encode(membre.getPassword()), membre.getRoleList());
+            Membre membreToSave = new Membre(membre.getNom(), membre.getPrenom(), membre.getCouleur(),
+                    membre.getDateNaissance(), membre.getTeam(), membre.getEmail(),
+                    passwordEncoder.encode(membre.getPassword()), membre.getRoleList());
             membreRepository.save(membreToSave);
             return jwtTokenProvider.createToken(membre.getEmail(), membre.getRoleList());
         } else {
@@ -62,8 +65,20 @@ public class MembreServiceImpl implements MembreService {
     }
 
     @Override
-    public Optional<Membre> findUserByEmail(String email) {
-        return membreRepository.findByEmail(email);
+    public Optional<Membre> findUserByEmail(Membre membre) {
+        return this.membreRepository.findByEmail(membre.getEmail());
     }
+
+    @Override
+    public Optional<Membre> findByEmail(String email) {
+        return this.membreRepository.findByEmail(email);
+    }
+
+    @Override
+    public Membre chercheEmail(String email) {
+        return this.membreRepository.chercheEmail(email);
+    }
+
+
 }
 

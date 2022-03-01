@@ -4,117 +4,131 @@ import fr.organizee.dto.JsonWebToken;
 import fr.organizee.dto.MembreDto;
 import fr.organizee.exception.ExistingUsernameException;
 import fr.organizee.exception.InvalidCredentialsException;
+import fr.organizee.exception.MembreNotFoundException;
 import fr.organizee.model.Membre;
-//import fr.organizee.model.Team;
+import fr.organizee.model.Menu;
+import fr.organizee.model.Team;
 import fr.organizee.repository.MembreRepository;
-//import fr.organizee.repository.TeamRepository;
 import fr.organizee.service.MembreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-/* toto */
+
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/membres")
+@RequestMapping(value="/membres")
 public class MembreController {
 
     @Autowired
     private MembreRepository membreRepo;
-
+  
     @Autowired
     private MembreService membreService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    private TeamRepository teamRepo;
-
-//    @RequestMapping("/membres")
+    public MembreController() {}
+  
     @ResponseBody
     public String home()
     {
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>Affichages des membres</h1>");
-        sb.append("<ul><li><a href='http://localhost:8080/membres/all'>Liste des <strong>membres</strong></a></li>");
+        sb.append("<ul><li><a href='http://localhost:8088/membres/all'>Liste des <strong>membres</strong></a></li>");
         return  sb.toString();
     }
 
+    /**
+     * Rechercher tous les membres
+     * @return
+     * http://localhost:8088/membres/all
+     */
     @GetMapping(value = "/all")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> getAll(){
-        List<Membre> liste = null;
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> getAllMembres(){
+        List<Membre> listeMembres;
         try
         {
-            liste = membreRepo.findAll();
+            listeMembres = membreRepo.findAll();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            MembreNotFoundException commandeNotFoundException = new MembreNotFoundException();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commandeNotFoundException.getMessage());
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(liste);
+        return ResponseEntity.status(HttpStatus.OK).body(listeMembres);
     }
 
-    @GetMapping("/admin/all")
+    /**
+     * Rechercher tous les membres admin
+     * @return
+     * http://localhost:8088/membres/admin/all
+     */
+
+    @GetMapping(value="/admin/all")
     @PreAuthorize("hasRole('ROLE_PARENT')")
     public List<MembreDto> getAllAdminUsers() {
-        return membreService.findAllUsers().stream().map(appUser -> new MembreDto(appUser.getEmail(), appUser.getRoleList())).collect(Collectors.toList());
-
+        return membreService.findAllUsers().stream().map(appUser ->
+                new MembreDto(appUser.getEmail(),
+                        appUser.getRoleList())).collect(Collectors.toList());
     }
 
-//    @GetMapping(value = "/team/all")
-//    public ResponseEntity<?> getAllTeam(){
-//        List<Team> liste = null;
-//        try
-//        {
-//            liste = teamRepo.findAll();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(liste);
-//    }
+    /**
+     * Rechercher un membre par son Id
+     * @return
+     * http://localhost:8088/membres/1
+     */
 
-    @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> findById(@PathVariable int id){
-        Optional<Membre> membre = null;
-        try
-        {
+    @GetMapping(value="/{id}")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> getMembreById(@PathVariable int id) {
+        Optional<Membre> membre;
+        try {
             membre = membreRepo.findById(id);
+            if (membre.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(membre);
+            } else {
+                MembreNotFoundException membreNotFoundException = new MembreNotFoundException(id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(membreNotFoundException.getMessage());
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * Rechercher un membre par l'Id de sa team
+     * @return
+     * http://localhost:8088/membres/1
+     */
+    @GetMapping(value = "team/{team_id}")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> findByTeamId(@PathVariable int team_id) {
+        List<Membre> membres = null;
+        try {
+            membres = membreRepo.FindMembresByTeam(team_id);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(membre);
+        return ResponseEntity.status(HttpStatus.OK).body(membres);
     }
 
-//    @GetMapping(value = "/membres/delete/{id}")
-//    public void deleteMembreId(@PathVariable("id") Integer id) {
-//
-//            membreRepo.deleteById(id);
-//
-//    }
+    /**
+     * Inscription
+     * @return
+     * http://localhost:8088/membres/sign-up
+     */
 
-    @DeleteMapping(value = "/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> deleteMembre(@PathVariable int id){
-        try {
-            membreRepo.delete(membreRepo.getById(id));
-            //membreRepo.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Membre effacé !");
-
-        } catch (EntityNotFoundException e) {
-
-            return ResponseEntity.status(HttpStatus.OK).body("Membre introuvable !");
-        }
-    }
-
-    @PostMapping("/sign-up")
+    @PostMapping(value="/sign-up")
     public ResponseEntity<JsonWebToken> signUp(@RequestBody Membre membre) {
         try {
             return ResponseEntity.ok(new JsonWebToken(membreService.signup(membre)));
@@ -123,6 +137,78 @@ public class MembreController {
         }
     }
 
+    /**
+     * Ajout d'un membre
+     * @return
+     * http://localhost:8088/membres/add
+     */
+    @PostMapping(value="/add/{team_id}", produces="application/json", consumes= "application/json")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> addMembre(@RequestBody Membre membre, @PathVariable Integer team_id){
+        Membre resultMembre = null;
+        try{
+            Team team = new Team();
+            team.setId(team_id);
+            membre.setTeam(team);
+            //resultMembre = membreRepo.saveAndFlush(membre);
+            return ResponseEntity.ok(new JsonWebToken(membreService.signup(membre)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+        //return ResponseEntity.status(HttpStatus.CREATED).body(resultMembre);
+    }
+
+    /**
+     * Modifier une commande par son Id
+     * @return
+     * http://localhost:8088/membres/update/1
+     *
+     */
+    @PutMapping("/update/{id}")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
+    public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable int id){
+        Optional<Membre> membreUpdate;
+        try {
+            membreUpdate = membreRepo.findById(id);
+            // membre trouvé
+            if(membreUpdate.isPresent()){
+                membre.setId(membreUpdate.get().getId());
+                membreRepo.save(membre);
+            }
+            //membre inconnu
+            else{
+                MembreNotFoundException membreNotFoundException = new MembreNotFoundException(id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(membreNotFoundException.getMessage());
+            }
+            //gestion de l'erreur
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        // retour membre
+        return ResponseEntity.status(HttpStatus.OK).body(membre);
+    }
+
+    /**
+     * Supprimer un membre par son Id
+     * @return
+     *  http://localhost:8088/membres/delete/1
+     */
+    @DeleteMapping(value = "/delete/{id}")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
+    public ResponseEntity<?> deleteMembre(@PathVariable int id){
+        try {
+            membreRepo.getById(id);
+            membreRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Membre supprimé !");
+        } catch (Exception e) {
+            MembreNotFoundException membreNotFoundException = new MembreNotFoundException(id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(membreNotFoundException.getMessage());
+        }
+    }
+
+
+    /**************************** Login / Se connceter ****************************/
     @PostMapping("/sign-in")
     public ResponseEntity<JsonWebToken> signIn(@RequestBody Membre membre) {
         try {
@@ -132,47 +218,37 @@ public class MembreController {
         }
     }
 
-    @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable Integer id) throws Exception {
+    /********************* Gestion Mot de Passe ************************************/
+    //cette methode ne fonctionne pas parce que ça affiche "trouvé" dans tous les cas
+    @PostMapping("/forgot-password")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> findUserByEmail(@RequestBody Membre membre) {
         Membre resultMembre = null;
         try {
-            resultMembre = membreRepo.save(membre);
+            resultMembre = membreRepo.chercheEmail(membre.getEmail());
+            String uuid = UUID.randomUUID().toString();
+            resultMembre.setPassword(uuid);
+            membreRepo.saveAndFlush(resultMembre);
+            return ResponseEntity.status(HttpStatus.OK).body(uuid);
+        } catch (EntityNotFoundException e) {
 
+            return ResponseEntity.status(HttpStatus.OK).body("Email introuvable !");
+        }
+
+    }
+
+    @PutMapping("/reset-password/{uuid}")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> updatePassword(@RequestBody Membre membre, @PathVariable String uuid) throws Exception {
+        Membre resultMembre = null;
+        try {
+            resultMembre = membreRepo.findByUUID(uuid);
+            resultMembre.setPassword(passwordEncoder.encode(membre.getPassword()));
+            membreRepo.saveAndFlush(resultMembre);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
     }
-
-//    UPDATE SUR UN CHAMPS
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable Integer id) throws Exception {
-//        Membre resultMembre = null;
-//        Membre oldMembre = membreRepo.getById(id);
-//        oldMembre.setNom(membre.getNom());
-//        //Membre resultMembre = membreRepo.getById(id);
-//        try {
-//            resultMembre = membreRepo.save(oldMembre);
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
-//    }
-
-//    @GetMapping(value = "/team/{id}")
-//    public ResponseEntity<?> findTeamById(@PathVariable int id){
-//        Optional<Team> liste = null;
-//        try
-//        {
-//            liste = teamRepo.findById(id);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(liste);
-//    }
 }

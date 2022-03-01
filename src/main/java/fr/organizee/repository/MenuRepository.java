@@ -14,4 +14,5 @@ public interface MenuRepository extends JpaRepository <Menu, Integer> {
 
     @Query(value = "select * from menu where team_id = :team_id", nativeQuery = true)
     List<Menu> FindMenusByTeam(@Param("team_id") int team_id);
+
 }
