@@ -17,12 +17,12 @@ INSERT INTO `contact` (`id`, `adresse`, `date_naissance`, `email`, `nom`, `preno
 	(10, '1 Westridge Road', '2021-03-11', 'emebs9@uol.com.br', 'Evered', 'Mebs', '898-483-6075','4');
 	
 INSERT INTO `membre` (`id`, `couleur`, `date_naissance`, `email`, `is_admin`, `nom`, `password`, `prenom`, `smiley`, `team_id`) VALUES
-	(1, '#fcba03', '2021-12-13', 'hedi@simplon.com', '0', 'SKYWALKER', 'toto', 'Hédi', NULL, 1),
-	(2, '#8df505', '2021-07-03', 'aline@simplon.com', '0', 'FETT', 'tata', 'Aline', NULL, 1),
-	(3, '#091ced', '2021-01-20', 'isabelle@simplon.com', '0', 'SOLO', 'titi', 'Isabelle', NULL, 2),
-	(4, '#ed09de', '2021-06-29', 'blandine@simplon.com', '0', 'VADER', 'tutu', 'Blandine', NULL, 3),
-	(5, '#ed09de', '2021-08-29', 'sana@simplon.com', '0', 'C3PO', 'riri', 'Sana', NULL, 4),
-	(6, '#ed09de', '2021-10-29', 'cecile@simplon.com', '0', 'R2D2', 'loulou', 'Cecile', NULL, 4);
+	(1, '#fcba03', '2021-12-13', 'hedi@simplon.com', '0', 'SKYWALKER', 'toto', 'Hédi', 0, 1),
+	(2, '#8df505', '2021-07-03', 'aline@simplon.com', '0', 'FETT', 'tata', 'Aline', 0, 1),
+	(3, '#091ced', '2021-01-20', 'isabelle@simplon.com', '0', 'SOLO', 'titi', 'Isabelle', 0, 2),
+	(4, '#ed09de', '2021-06-29', 'blandine@simplon.com', '0', 'VADER', 'tutu', 'Blandine', 0, 3),
+	(5, '#ed09de', '2021-08-29', 'sana@simplon.com', '0', 'C3PO', 'riri', 'Sana', 0, 4),
+	(6, '#ed09de', '2021-10-29', 'cecile@simplon.com', '0', 'R2D2', 'loulou', 'Cecile', 0, 4);
 
 INSERT INTO `todo_list` (`id`, `nom`, `team_id`) VALUES
 	(1, 'Pour Blandine',1),
