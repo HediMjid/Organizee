@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface MenuRepository extends JpaRepository <Menu, Integer> {
 
-    @Query(value = "select * from menu where team_id = :team_id", nativeQuery = true)
+    @Query(value = "select * from menu where team_id = :team_id order by date_menu ASC", nativeQuery = true)
     List<Menu> FindMenusByTeam(@Param("team_id") int team_id);
+
 }
