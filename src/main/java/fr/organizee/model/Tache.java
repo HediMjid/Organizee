@@ -11,7 +11,7 @@ public class Tache {
     private int id;
     private String texte;
     private Boolean etat;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TODOLIST_ID")
     @JsonIgnoreProperties("tache")
     private TodoList todolist;

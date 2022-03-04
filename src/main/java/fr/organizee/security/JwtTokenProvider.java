@@ -27,8 +27,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import fr.organizee.repository.MembreRepository;
-
 /**
  * JWT : classe utilitaire chargÃ©e de fournir le Jeton (Token) et les vÃ©rifications
  */
@@ -46,8 +44,6 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private MembreRepository membreRepo;
     /**
      * Cette mÃ©thode d'initialisation s'exÃ©cute avant le constructeur
      * Elle encode notre code secret en base64 pour la transmission dans le header
@@ -108,10 +104,6 @@ public class JwtTokenProvider {
     public String createToken(String email, List<Role> roles){
 
         Claims claims = Jwts.claims().setSubject(email);
-        claims.put("userId", membreRepo.findByEmail(email).get().getId());
-        if(membreRepo.findByEmail(email).get().getTeam() != null){
-            claims.put("teamId", membreRepo.findByEmail(email).get().getTeam().getId());
-        }
         claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
 
         System.out.println("claims = "+claims);

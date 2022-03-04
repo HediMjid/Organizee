@@ -13,7 +13,7 @@ import fr.organizee.model.Membre;
 public interface MembreService {
 
     /**
-     * Methode qui permet Ã  un utilisateur de se connecter.
+     * Methode qui permet Ã  un utilisateur de se connecter.
      * @param email : nom de l'utilisateur.
      * @param password : mot de passe de l'utilisateur.
      * @returnun JWT si credentials est valide, throws InvalidCredentialsException otherwise.
@@ -24,11 +24,10 @@ public interface MembreService {
     /**
      * Methode qui permet de s'inscrire.
      * @param membre nouvel utilisateur.
-     * @return un JWT si user n'existe pas dÃ©jÃ  !
+     * @return un JWT si user n'existe pas dÃ©jÃ  !
      * @throws ExistingUsernameException
      */
     String signup(Membre membre) throws ExistingUsernameException;
-
 
     /**
      * Methode qui retourne tous les utilisateurs de la bd
@@ -37,14 +36,10 @@ public interface MembreService {
     List<Membre> findAllUsers();
 
     /**
-     * Methode qui retourne un utilisateur Ã  partir de son username
+     * Methode qui retourne un utilisateur Ã  partir de son username
      * @param email the username to look for.
      * @return an Optional object containing user if found, empty otherwise.
      */
-    Optional<Membre> findUserByEmail(Membre membre);
-    Optional<Membre> findByEmail(String email);
-
-    Membre chercheEmail(String email);
-
+    Optional<Membre> findUserByEmail(String email);
 }
 

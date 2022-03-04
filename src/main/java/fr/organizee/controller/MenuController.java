@@ -1,7 +1,7 @@
 package fr.organizee.controller;
 
+import fr.organizee.model.Contact;
 import fr.organizee.model.Menu;
-import fr.organizee.model.Team;
 import fr.organizee.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,8 @@ public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
 
-    //Récupère les infos d'un menu par son ID
     @GetMapping(value = "/{id}")
-    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findById(@PathVariable int id){
         Optional<Menu> menu = null;
         try
@@ -36,9 +35,8 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.OK).body(menu);
     }
 
-    //Récupère les infos des menus par la team ID
     @GetMapping(value = "team/{team_id}")
-    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findByTeamId(@PathVariable int team_id) {
         List<Menu> menus = null;
         try {
@@ -49,15 +47,11 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.OK).body(menus);
     }
 
-    //Ajoute un nouveau menu
-    @PostMapping(value="/add/{team_id}", produces="application/json", consumes= "application/json")
-    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
-    public ResponseEntity<?> addMenu(@RequestBody Menu menu, @PathVariable Integer team_id){
+    @PostMapping(value="/add")
+    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    public ResponseEntity<?> addMenu(@RequestBody Menu menu){
         Menu resultMenu = null;
         try {
-            Team team=new Team();
-            team.setId(team_id);
-            menu.setTeam(team);
             resultMenu = menuRepository.saveAndFlush(menu);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -66,28 +60,22 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resultMenu);
     }
 
-    //Mise a jour d'un menu par son ID
-    @PutMapping(value="/update/{team_id}/{id}", produces="application/json", consumes= "application/json")
-    //@PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer team_id, @PathVariable Integer id) throws Exception {
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
+    public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer id) throws Exception {
         Menu resultMenu = null;
         try {
-            menu.setId(menuRepository.findById(id).get().getId());
-            Team team=new Team();
-            team.setId(team_id);
-            menu.setTeam(team);
             resultMenu = menuRepository.save(menu);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(resultMenu);
+        return ResponseEntity.status(HttpStatus.OK).body(menuRepository);
     }
 
-    //Efface un menu par son ID
     @DeleteMapping(value = "/delete/{id}")
-    //@PreAuthorize("hasRole('ROLE_PARENT')")
+    @PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteMenu(@PathVariable int id){
         try {
             menuRepository.delete(menuRepository.getById(id));

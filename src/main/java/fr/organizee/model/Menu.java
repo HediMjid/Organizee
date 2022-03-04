@@ -10,22 +10,23 @@ public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String libelle;
     private LocalDate dateMenu;
-    private String repasMidi;
-    private String repasSoir;
-    @ManyToOne
+    private int validationProposition;
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties({"menu"})
+    @JsonIgnoreProperties("menu")
     private Team team;
+    @ManyToOne
+    private Membre membre;
 
     public Menu() {
     }
 
-    public Menu(LocalDate dateMenu,String repasMidi, String repasSoir, Team team) {
+    public Menu(String libelle, LocalDate dateMenu, int validationProposition) {
+        this.libelle = libelle;
         this.dateMenu = dateMenu;
-        this.repasMidi= repasMidi;
-        this.repasSoir= repasSoir;
-        this.team = team;
+        this.validationProposition=validationProposition;
     }
 
     public int getId() {
@@ -36,6 +37,14 @@ public class Menu {
         this.id = id;
     }
 
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
     public LocalDate getDateMenu() {
         return dateMenu;
     }
@@ -44,39 +53,12 @@ public class Menu {
         this.dateMenu = dateMenu;
     }
 
-    public String getRepasMidi() {
-        return repasMidi;
-    }
-
-    public void setRepasMidi(String repasMidi) {
-        this.repasMidi = repasMidi;
-    }
-
-    public String getRepasSoir() {
-        return repasSoir;
-    }
-
-    public void setRepasSoir(String repasSoir) {
-        this.repasSoir = repasSoir;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-
     @Override
     public String toString() {
         return "Menu{" +
                 "id=" + id +
+                ", libelle='" + libelle + '\'' +
                 ", dateMenu=" + dateMenu +
-                ", repasMidi='" + repasMidi + '\'' +
-                ", repasSoir='" + repasSoir + '\'' +
-                ", team=" + team +
                 '}';
     }
 }

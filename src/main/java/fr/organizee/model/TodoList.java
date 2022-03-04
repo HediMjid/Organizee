@@ -1,6 +1,5 @@
 package fr.organizee.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -13,13 +12,10 @@ public class TodoList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="TEAM_ID")
-    @JsonIgnoreProperties({"todolist","membre"})
-    private Team team;
-    @OneToMany(mappedBy = "todolist", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("todolist")
-    private List<Tache> taches = new ArrayList<>();
+    private Team team;
 
     public TodoList() {
     }
@@ -44,26 +40,11 @@ public class TodoList {
         this.nom = nom;
     }
 
-    public List<Tache> getTaches() {
-        return taches;
-    }
-
-    public void setTaches(List<Tache> taches) {
-        this.taches = taches;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
     @Override
     public String toString() {
         return "TodoList{" +
                 "id=" + id +
-                ", nom='" + nom + ", taches='" + taches + "}";
+                ", nom='" + nom + '\'' +
+                '}';
     }
 }

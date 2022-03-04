@@ -1,6 +1,5 @@
 package fr.organizee.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -13,24 +12,17 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
-
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
     @JsonIgnoreProperties("team")
     private List<Membre> membres = new ArrayList<>();
-
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
     @JsonIgnoreProperties("team")
-    @JsonIgnore
     private List<Contact> contacts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
     @JsonIgnoreProperties("team")
-    @JsonIgnore
     private List<TodoList> todolists = new ArrayList<>();
-
-    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "team", fetch=FetchType.LAZY)
     @JsonIgnoreProperties("team")
-    @JsonIgnore
     private List<Menu> menus = new ArrayList<>();
 
     public Team() {

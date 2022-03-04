@@ -8,7 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 public enum Role implements GrantedAuthority {
 
     ROLE_PARENT, ROLE_ENFANT;
-    
+
+    @Override
     public String getAuthority() {
         return name();
     }
