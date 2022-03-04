@@ -159,15 +159,18 @@ public class MembreController {
      *
      * @return http://localhost:8088/membres/update/1
      */
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{team_id}/{id}")
     //@PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable int id) {
+    public ResponseEntity<?> updateMembre(@RequestBody Membre membre, @PathVariable int id, @PathVariable int team_id) {
         Optional<Membre> membreUpdate;
         try {
             membreUpdate = membreRepository.findById(id);
             // membre trouvé
             if (membreUpdate.isPresent()) {
-                membre.setId(membreUpdate.get().getId());
+                membre.setId(membreRepository.findById(id).get().getId());
+                Team team = new Team();
+                team.setId(team_id);
+                membre.setTeam(team);
                 membreRepository.save(membre);
             }
             //membre inconnu
@@ -213,9 +216,7 @@ public class MembreController {
     }
 
     /********************* Gestion Mot de Passe ************************************/
-    //cette methode ne fonctionne pas parce que ça affiche "trouvé" dans tous les cas
     @PostMapping("/forgot-password")
-    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findUserByEmail(@RequestBody Membre membre) {
         Membre resultMembre = null;
         try {
@@ -232,7 +233,6 @@ public class MembreController {
     }
 
     @PutMapping("/reset-password/{uuid}")
-    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> updatePassword(@RequestBody Membre membre, @PathVariable String uuid) throws Exception {
         Membre resultMembre = null;
         try {
