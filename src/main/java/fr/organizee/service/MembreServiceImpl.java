@@ -1,8 +1,10 @@
 package fr.organizee.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import fr.organizee.exception.ExistingUsernameException;
+import fr.organizee.exception.InvalidCredentialsException;
+import fr.organizee.model.Membre;
+import fr.organizee.repository.MembreRepository;
+import fr.organizee.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,11 +12,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import fr.organizee.exception.ExistingUsernameException;
-import fr.organizee.exception.InvalidCredentialsException;
-import fr.organizee.model.Membre;
-import fr.organizee.repository.MembreRepository;
-import fr.organizee.security.JwtTokenProvider;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class
@@ -27,7 +26,7 @@ MembreServiceImpl implements MembreService {
     private BCryptPasswordEncoder passwordEncoder; // permet l'encodage du mot de passe
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;	// permet la fourniture du Jeton (Token)
+    private JwtTokenProvider jwtTokenProvider;    // permet la fourniture du Jeton (Token)
 
     @Autowired
     private AuthenticationManager authenticationManager; // gestionnaire d'authentification
@@ -59,6 +58,7 @@ MembreServiceImpl implements MembreService {
         }
     }
 
+
     @Override
     public List<Membre> findAllUsers() {
         return membreRepository.findAll();
@@ -81,4 +81,3 @@ MembreServiceImpl implements MembreService {
 
 
 }
-
