@@ -101,9 +101,9 @@ public class MembreController {
     }
 
     /**
-     * Rechercher un membre par l'Id de sa team
+     * Rechercher les membres par l'Id de leur team
      *
-     * @return http://localhost:8088/membres/1
+     * @return http://localhost:8088/membres/team/1
      */
     @GetMapping(value = "team/{team_id}")
     //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
