@@ -245,4 +245,20 @@ public class MembreController {
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
     }
-}
+
+    @PutMapping("/update/smiley/{idUser}")
+    public ResponseEntity<?> updateSmiley(@RequestBody String numero, @PathVariable int idUser) throws Exception {
+        Optional <Membre> resultMembre ;
+        try {
+            resultMembre = membreRepository.findById(idUser);
+            resultMembre.get().setSmiley(numero);
+            membreRepository.saveAndFlush(resultMembre.get());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
+    }
+    }
+
+
