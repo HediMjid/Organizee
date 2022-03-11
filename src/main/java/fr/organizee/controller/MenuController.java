@@ -23,7 +23,7 @@ public class MenuController {
 
     //Récupère les infos d'un menu par son ID
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findById(@PathVariable int id){
         Optional<Menu> menu = null;
         try
@@ -38,7 +38,7 @@ public class MenuController {
 
     //Récupère les infos des menus par la team ID
     @GetMapping(value = "team/{team_id}")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> findByTeamId(@PathVariable int team_id) {
         List<Menu> menus = null;
         try {
@@ -51,7 +51,7 @@ public class MenuController {
 
     //Ajoute un nouveau menu
     @PostMapping(value="/add/{team_id}", produces="application/json", consumes= "application/json")
-    @PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT') or hasRole('ROLE_ENFANT')")
     public ResponseEntity<?> addMenu(@RequestBody Menu menu, @PathVariable Integer team_id){
         Menu resultMenu = null;
         try {
@@ -68,7 +68,7 @@ public class MenuController {
 
     //Mise a jour d'un menu par son ID
     @PutMapping(value="/update/{team_id}/{id}", produces="application/json", consumes= "application/json")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> updateMenu(@RequestBody Menu menu, @PathVariable Integer team_id, @PathVariable Integer id) throws Exception {
         Menu resultMenu = null;
         try {
@@ -87,7 +87,7 @@ public class MenuController {
 
     //Efface un menu par son ID
     @DeleteMapping(value = "/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_PARENT')")
+    //@PreAuthorize("hasRole('ROLE_PARENT')")
     public ResponseEntity<?> deleteMenu(@PathVariable int id){
         try {
             menuRepository.delete(menuRepository.getById(id));
