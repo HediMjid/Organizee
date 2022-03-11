@@ -145,7 +145,6 @@ public class MembreController {
             Team team = new Team();
             team.setId(team_id);
             membre.setTeam(team);
-            //resultMembre = membreRepository.saveAndFlush(membre);
             return ResponseEntity.ok(new JsonWebToken(membreService.signup(membre)));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -248,7 +247,7 @@ public class MembreController {
 
     @PutMapping("/update/smiley/{idUser}")
     public ResponseEntity<?> updateSmiley(@RequestBody String numero, @PathVariable int idUser) throws Exception {
-        Optional <Membre> resultMembre ;
+        Optional<Membre> resultMembre;
         try {
             resultMembre = membreRepository.findById(idUser);
             resultMembre.get().setSmiley(numero);
@@ -259,6 +258,6 @@ public class MembreController {
 
         return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
     }
-    }
+}
 
 
