@@ -143,6 +143,9 @@ public class Membre {
         return roleList;
     }
 
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     public String getSmiley() {
         return smiley;
@@ -150,10 +153,6 @@ public class Membre {
 
     public void setSmiley(String smiley) {
         this.smiley = smiley;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
     }
 
     @Override
