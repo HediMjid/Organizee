@@ -43,7 +43,7 @@ public class MembreController {
 
     }
 
-
+    /**************************** Crud Membre ****************************/
     /**
      * Rechercher tous les membres
      *
@@ -214,7 +214,7 @@ public class MembreController {
         }
     }
 
-    /********************* Gestion Mot de Passe ************************************/
+    /********************* Gestion des mots de passe ************************************/
     @PostMapping("/forgot-password")
     public ResponseEntity<?> findUserByEmail(@RequestBody Membre membre) {
         Membre resultMembre = null;
@@ -245,6 +245,7 @@ public class MembreController {
         return ResponseEntity.status(HttpStatus.OK).body(resultMembre);
     }
 
+    /**************************** Update Smiley ****************************/
     @PutMapping("/update/smiley/{idUser}")
     public ResponseEntity<?> updateSmiley(@RequestBody String numero, @PathVariable int idUser) throws Exception {
         Optional<Membre> resultMembre;
